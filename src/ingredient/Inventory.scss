@@ -1,0 +1,62 @@
+.inventory {
+  position: relative;
+
+  .grid {
+	display: grid;
+	grid-template-columns: 96px 96px 96px 96px;
+	grid-gap: 1px;
+	background-color: #000000;
+	width: fit-content;
+
+	.clickableIngredient {
+	  width: 96px;
+	  height: 96px;
+	  background-color: #000000;
+	  border: 1px solid #ffffff;
+	}
+  }
+
+  .inventory-tab-list {
+	display: flex;
+	flex-flow: row;
+  }
+
+  .inventory-selector {
+	cursor: pointer;
+	margin: 0px 2px;
+
+	&:hover {
+	  cursor: pointer;
+	  color: lightcoral;
+
+	  button {
+		cursor: pointer;
+		color: lightcoral;
+	  }
+	}
+
+	button {
+	  background: none;
+	  border: none;
+
+	  &:focus,
+	  &:active {
+		border: none;
+		outline: 0;
+	  }
+	}
+  }
+
+  .inventory-tab-containers {
+	position: relative;
+
+	.inventory-tab {
+	  position: absolute;
+	  visibility: hidden;
+
+	  &.shown {
+		visibility: visible;
+	  }
+	}
+  }
+}

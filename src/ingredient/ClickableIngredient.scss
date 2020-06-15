@@ -1,0 +1,33 @@
+.clickableIngredient {
+	position: relative;
+	cursor: pointer;
+
+  .numberInInventory {
+	position: absolute;
+	bottom: 3px;
+	right: 3px;
+	color: white;
+	background-color: transparent;
+	border: none;
+	width: 43px;
+	text-align: right;
+	text-shadow: 0 0 3px #000000;
+	font-size: 24px;
+
+	&::selection {
+	  background: lightcoral;
+	  text-shadow: none;
+	  color: #ffffff;
+	}
+
+	&:focus {
+	  background-color: #0e0e0e;
+	}
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+  }
+}

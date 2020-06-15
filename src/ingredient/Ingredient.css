@@ -1,0 +1,368 @@
+.icon-ingredient {
+	width: 96px;
+	height: 96px;
+	display: block;
+}
+
+.food {
+	background-image: url("/sprites/ingredients/food-ingredients.png");
+	background-position: -1px -15px;
+}
+
+.icon-ingredient.food.icon-fruit {
+	background-position-y: -15px;
+}
+
+.icon-ingredient.food.icon-meat {
+	background-position-y: -237px;
+}
+
+.icon-ingredient.food.icon-mushrooms {
+	background-position-y: -570px;
+}
+
+.icon-ingredient.food.icon-vegetables {
+	background-position-y: -792px;
+}
+
+.icon-ingredient.food.icon-fish {
+	background-position-y: -1014px;
+}
+
+.icon-ingredient.food.icon-shellfish {
+	background-position-y: -1111px;
+}
+
+.icon-ingredient.food.acorn {
+	background-position-x: -971px;
+}
+
+.icon-ingredient.food.apple {
+	background-position-x: -1px;
+}
+
+.icon-ingredient.food.armoranth {
+	background-position-x: -292px;
+}
+
+.icon-ingredient.food.armored-carp {
+	background-position-x: -874px;
+}
+
+.icon-ingredient.food.armored-porgy {
+	background-position-x: -1165px;
+}
+
+.icon-ingredient.food.big-hearty-radish {
+	background-position-x: -98px;
+}
+
+.icon-ingredient.food.big-hearty-truffle {
+	background-position-x: -971px;
+}
+
+.icon-ingredient.food.bird-egg {
+	background-position-x: -583px;
+}
+
+.icon-ingredient.food.bladed-rhino-beetle {
+
+}
+
+.icon-ingredient.food.blue-nightshade {
+	background-position-x: -680px;
+}
+
+.icon-ingredient.food.bright-eyed-crab {
+	background-position-x: -680px;
+}
+
+.icon-ingredient.food.cane-sugar {
+
+}
+
+.icon-ingredient.food.chickaloo-tree-nut {
+	background-position-x: -1068px;
+}
+
+.icon-ingredient.food.chillfin-trout {
+	background-position-x: -292px;
+}
+
+.icon-ingredient.food.chillshroom {
+	background-position-x: -98px;
+}
+
+.icon-ingredient.food.cold-darner {
+
+}
+
+.icon-ingredient.food.cool-safflina {
+
+}
+
+.icon-ingredient.food.courser-bee-honey {
+
+}
+
+.icon-ingredient.food.electric-darner {
+
+}
+
+.icon-ingredient.food.electric-safflina {
+
+}
+
+.icon-ingredient.food.endura-carrot {
+	background-position-x: -486px;
+}
+
+.icon-ingredient.food.endura-shroom {
+	background-position-x: -1068px;
+}
+
+.icon-ingredient.food.energetic-rhino-beetle {
+
+}
+
+.icon-ingredient.food.fairy {
+
+}
+
+.icon-ingredient.food.fireproof-lizard {
+
+}
+
+.icon-ingredient.food.fleet-lotus-seeds {
+	background-position-x: -389px;
+}
+
+.icon-ingredient.food.fortified-pumpkin {
+
+}
+
+.icon-ingredient.food.fresh-milk {
+
+}
+
+.icon-ingredient.food.goat-butter {
+
+}
+
+.icon-ingredient.food.goron-spice {
+
+}
+
+.icon-ingredient.food.hearty-bass {
+
+}
+
+.icon-ingredient.food.hearty-blueshell-snail {
+
+}
+
+.icon-ingredient.food.hearty-durian {
+
+}
+
+.icon-ingredient.food.hearty-lizard {
+
+}
+
+.icon-ingredient.food.hearty-radish {
+
+}
+
+.icon-ingredient.food.hearty-salmon {
+
+}
+
+.icon-ingredient.food.hearty-truffle {
+
+}
+
+.icon-ingredient.food.hightail-lizard {
+
+}
+
+.icon-ingredient.food.hot-footed-frog {
+
+}
+
+.icon-ingredient.food.hydromelon {
+
+}
+
+.icon-ingredient.food.hylian-rice {
+
+}
+
+.icon-ingredient.food.hylian-shroom {
+
+}
+
+.icon-ingredient.food.hyrule-bass {
+
+}
+
+.icon-ingredient.food.hyrule-herb {
+
+}
+
+.icon-ingredient.food.ironshell-crab {
+
+}
+
+.icon-ingredient.food.ironshroom {
+
+}
+
+.icon-ingredient.food.mighty-bananas {
+
+}
+
+.icon-ingredient.food.mighty-carp {
+
+}
+
+.icon-ingredient.food.mighty-porgy {
+
+}
+
+.icon-ingredient.food.mighty-thistle {
+
+}
+
+.icon-ingredient.food.monster-extract {
+
+}
+
+.icon-ingredient.food.palm-fruit {
+
+}
+
+.icon-ingredient.food.razorclaw-crab {
+
+}
+
+.icon-ingredient.food.razorshroom {
+
+}
+
+.icon-ingredient.food.restless-cricket {
+
+}
+
+.icon-ingredient.food.rugged-rhino-beetle {
+
+}
+
+.icon-ingredient.food.rushroom {
+
+}
+
+.icon-ingredient.food.sanke-carp {
+
+}
+
+.icon-ingredient.food.silent-princess {
+
+}
+
+.icon-ingredient.food.silent-shroom {
+
+}
+
+.icon-ingredient.food.sizzlefin-trout {
+
+}
+
+.icon-ingredient.food.smotherwing-butterfly {
+
+}
+
+.icon-ingredient.food.sneaky-river-snail {
+
+}
+
+.icon-ingredient.food.spicy-pepper {
+
+}
+
+.icon-ingredient.food.stamella-shroom {
+
+}
+
+.icon-ingredient.food.staminoka-bass {
+
+}
+
+.icon-ingredient.food.stealthfin-trout {
+
+}
+
+.icon-ingredient.food.summerwing-butterfly {
+
+}
+
+.icon-ingredient.food.sunset-firefly {
+
+}
+
+.icon-ingredient.food.sunshroom {
+
+}
+
+.icon-ingredient.food.swift-carrot {
+
+}
+
+.icon-ingredient.food.swift-violet {
+
+}
+
+.icon-ingredient.food.tabantha-wheat {
+
+}
+
+.icon-ingredient.food.thunderwing-butterfly {
+
+}
+
+.icon-ingredient.food.tireless-frog {
+
+}
+
+.icon-ingredient.food.voltfin-trout {
+
+}
+
+.icon-ingredient.food.voltfruit {
+
+}
+
+.icon-ingredient.food.warm-darner {
+
+}
+
+.icon-ingredient.food.warm-safflina {
+
+}
+
+.icon-ingredient.food.wildberry {
+
+}
+
+.icon-ingredient.food.winterwing-butterfly {
+
+}
+
+.icon-ingredient.food.zapshroom {
+
+}
+
+
+.monster {
+	background-image: url("/sprites/ingredients/monster-parts.png");
+	background-position: 0 0;
+}
