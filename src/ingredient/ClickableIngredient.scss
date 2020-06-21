@@ -1,18 +1,20 @@
+@import "../scss/helpers";
+
 .clickableIngredient {
 	position: relative;
 	cursor: pointer;
 
   .numberInInventory {
 	position: absolute;
-	bottom: 3px;
-	right: 3px;
+	bottom: rem(3px);
+	right: rem(3px);
 	color: white;
 	background-color: transparent;
 	border: none;
-	width: 43px;
+	width: rem(43px);
 	text-align: right;
-	text-shadow: 0 0 3px #000000;
-	font-size: 24px;
+	text-shadow: 0 0 rem(3px) #000000;
+	font-size: rem(24px);
 
 	&::selection {
 	  background: lightcoral;

@@ -75,8 +75,6 @@ const InventoryManagement = (props: InventoryViewProps) => {
 
 			<InventorySearch onSearchQuery={onSearch} ref={searchElement} />
 
-			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear Inventory</button>
-
 			{/*Tabs*/}
 			<nav className={"inventory-tab-list"}>
 				{inventoryTabs.map(t => {
@@ -88,27 +86,32 @@ const InventoryManagement = (props: InventoryViewProps) => {
 				})}
 			</nav>
 
-			{searchQuery.length <= 0 &&
-				<div className={"inventory-tab-containers"}>
-					{inventoryTabs.map(t => {
-						return (
-							<div className={`grid inventory-tab tab-${t} ${selectedTab === t ? 'shown' : ''}`} key={`inventory-content-tab-${t}`}>
-								{availableIngredients
-									.filter(i => i.ingredient.classification === t)
-									.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
-							</div>
-						);
-					})}
-				</div>
-			}
+			<div className={"inventory-view"}>
+				{searchQuery.length <= 0 &&
+					<div className={"inventory-tab-containers"}>
+						{inventoryTabs.map(t => {
+							return (
+								<div className={`grid inventory-tab tab-${t} ${selectedTab === t ? 'shown' : ''}`} key={`inventory-content-tab-${t}`}>
+									{availableIngredients
+										.filter(i => i.ingredient.classification === t)
+										.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
+								</div>
+							);
+						})}
+					</div>
+				}
 
-			{searchQuery.length > 0 &&
-				<div className={`grid`}>
-					{availableIngredients
-						.filter(i => i.ingredient.name.toLowerCase().includes(searchQuery))
-						.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
-				</div>
-			}
+				{searchQuery.length > 0 &&
+					<div className={`grid`}>
+						{availableIngredients
+							.filter(i => i.ingredient.name.toLowerCase().includes(searchQuery))
+							.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
+					</div>
+				}
+			</div>
+
+			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear Inventory</button>
+
 			<ReactTooltip />
 
 			<InventoryTally inventory={inventory} />

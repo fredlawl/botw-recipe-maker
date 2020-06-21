@@ -1,6 +1,8 @@
+@import "../scss/helpers";
+
 .inventory-search {
   input {
-	padding: 5px;
+	padding: rem(5px);
 	width: 100%;
   }
 }

@@ -1,8 +1,11 @@
+@import "scss/helpers";
+
 .app {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  padding: rem(20px);
 
   .inventory-management,
   .recipe-locator {
@@ -14,6 +17,7 @@
 
   .inventory-management {
 	flex: 0;
+	margin-right: rem(20px);
   }
 
   .recipe-locator {

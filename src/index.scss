@@ -1,3 +1,5 @@
+@import "scss/helpers";
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -13,6 +15,7 @@
  */
 
 html {
+  font-size: 16px;
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -27,7 +30,6 @@ html {
 body {
   margin: 0;
   font-family: 'Raleway', sans-serif;
-  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
