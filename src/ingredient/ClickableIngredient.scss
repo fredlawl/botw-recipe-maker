@@ -6,15 +6,17 @@
 
   .numberInInventory {
 	position: absolute;
-	bottom: rem(3px);
-	right: rem(3px);
+	bottom: rem(5px);
+	right: rem(5px);
 	color: white;
 	background-color: transparent;
 	border: none;
-	width: rem(43px);
+	width: rem(50px);
 	text-align: right;
 	text-shadow: 0 0 rem(3px) #000000;
-	font-size: rem(24px);
+	font-size: rem(28px);
+	font-weight: 500;
+	font-family: sans-serif;
 
 	&::selection {
 	  background: lightcoral;
