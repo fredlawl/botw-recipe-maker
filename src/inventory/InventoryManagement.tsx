@@ -75,7 +75,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 
 			<InventorySearch onSearchQuery={onSearch} ref={searchElement} />
 
-			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear All</button>
+			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear Inventory</button>
 
 			{/*Tabs*/}
 			<nav className={"inventory-tab-list"}>
