@@ -12,7 +12,7 @@ class Recipe extends Entity<Recipe> {
 		return newRecipe;
 	}
 
-	public static createdCrafted(name: string, ingredients: IngredientBundle[]): Recipe {
+	public static createCrafted(name: string, ingredients: IngredientBundle[]): Recipe {
 		const recipe = new Recipe(name, ingredients);
 		recipe._crafted = true;
 		return recipe;

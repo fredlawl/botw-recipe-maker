@@ -5,7 +5,7 @@ import Recipe from "./Recipe";
 
 describe("Recipe.craft()", () => {
 	test("given already crafted recipe, it remains crafted", () => {
-		const craftedRecipe = Recipe.createdCrafted("crafted", []);
+		const craftedRecipe = Recipe.createCrafted("crafted", []);
 		expect(craftedRecipe.craft([]).crafted).toBe(true);
 	});
 
