@@ -37,6 +37,7 @@
 	cursor: pointer;
 	margin: rem(0px) rem(2px);
 
+	&.selected,
 	&:hover {
 	  cursor: pointer;
 	  color: lightcoral;

@@ -19,7 +19,7 @@ interface InventoryViewProps {
 const InventoryManagement = (props: InventoryViewProps) => {
 	const [cacheId, setCacheId] = useState(0);
 	const [inventory, setInventory] = useState(props.inventory);
-	const [selectedTab, setSelectedTab] = useState(IngredientClass.FRUIT);
+	const [selectedTab, setSelectedTab] = useState<IngredientClass | undefined>(IngredientClass.FRUIT);
 	const [searchQuery, setSearchQuery] = useState('');
 	const searchElement = useRef<HTMLInputElement>(null);
 
@@ -58,7 +58,16 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	};
 
 	const onSearch = (searchQuery: string): void => {
-		setSearchQuery(searchQuery.toLowerCase());
+		const query = searchQuery.toLowerCase();
+
+		if (query.length === 0) {
+			changeTab(IngredientClass.FRUIT);
+			return;
+		}
+
+		setSearchQuery(searchQuery);
+		setSelectedTab(undefined);
+
 	};
 
 	const inventoryUpdated = () => {
