@@ -1,4 +1,4 @@
-# BOTW Recipe Guide
+# BOTW Recipe Guide ([Demo](https://practical-golick-e56d4b.netlify.app/))
 
 Enter your inventory amounts, and the app will automatically begin calculating
 what recipes are available to you to make!
@@ -12,6 +12,8 @@ but to also build something useful with this practice project.
 > NOTE: This is still under development. Sofar the app doesn't really do
 anything other than keep track of your inventory amounts--and even that is
 incomplete.
+
+The demo is powered by [Netlify](https://www.netlify.com/).
 
 ## Features
 
