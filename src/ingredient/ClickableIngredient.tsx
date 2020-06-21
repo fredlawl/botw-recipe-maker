@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./ClickableIngredient.scss";
 import "./Ingredient.css"
-import Ingredient from "./Ingredient";
+import Ingredient, {getIngredientIconClass} from "./Ingredient";
 
 interface props {
 	ingredient: Ingredient,
@@ -36,7 +36,7 @@ const ClickableIngredient = (props: props) => {
 			className={"clickableIngredient"}>
 			<div
 				data-tip={props.ingredient.name}
-				className={props.ingredient.iconClass}
+				className={getIngredientIconClass(props.ingredient)}
 				title={props.ingredient.name}
 				onClick={() => updateAmount(amount + 1)}/>
 			<input
@@ -46,7 +46,7 @@ const ClickableIngredient = (props: props) => {
 				min={AMNT_MIN}
 				max={AMNT_MAX}
 				value={amount}
-				className={"numberInInventory"} />
+				className={"numberInInventory"}/>
 		</div>
 	);
 };

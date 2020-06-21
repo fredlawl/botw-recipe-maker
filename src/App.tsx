@@ -1,15 +1,24 @@
-import React from 'react';
-import './App.css';
-import Inventory from "./ingredient/Inventory";
-import ReactTooltip from "react-tooltip";
+import React, {useState} from 'react';
+import './App.scss';
+import InventoryManagement from "./inventory/InventoryManagement";
+import Inventory from "./inventory/Inventory";
+import RecipeLocator from "./recipe/RecipeLocator";
 
-function App() {
-  return (
-  	<>
-		<Inventory />
-		<ReactTooltip />
-	</>
-  );
+const defaultInventory = new Inventory();
+
+const App = () => {
+	const [inventory, setInventory] = useState(defaultInventory);
+
+	const onInventoryUpdated = (newInventory: Inventory) => {
+		setInventory(newInventory);
+	};
+
+	return (
+		<div className={"app"}>
+			<InventoryManagement inventory={inventory} onInventoryUpdated={onInventoryUpdated}/>
+			<RecipeLocator inventory={inventory}/>
+		</div>
+	);
 }
 
 export default App;

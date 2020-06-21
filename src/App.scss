@@ -1,0 +1,22 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
+  .inventory-management,
+  .recipe-locator {
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+  }
+
+  .inventory-management {
+	flex: 0;
+  }
+
+  .recipe-locator {
+
+  }
+}

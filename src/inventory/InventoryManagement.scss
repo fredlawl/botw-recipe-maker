@@ -1,4 +1,4 @@
-.inventory {
+.inventory-management {
   position: relative;
 
   .grid {
@@ -19,6 +19,11 @@
   .inventory-tab-list {
 	display: flex;
 	flex-flow: row;
+	margin-bottom: 10px;
+  }
+
+  .clear-all-btn {
+	margin-bottom: 10px;
   }
 
   .inventory-selector {
@@ -56,7 +61,12 @@
 
 	  &.shown {
 		visibility: visible;
+		position: inherit;
 	  }
 	}
+  }
+
+  .inventory-search {
+	margin-bottom: 10px;
   }
 }

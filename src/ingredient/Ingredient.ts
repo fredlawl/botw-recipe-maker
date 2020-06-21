@@ -1,3 +1,8 @@
+import Entity from "../Entity";
+
+/**
+ * Describes the type of the ingredient
+ */
 enum IngredientClass {
 	FRUIT = 'fruit',
 	MEAT = 'meat',
@@ -10,6 +15,9 @@ enum IngredientClass {
 	SHELLFISH = 'shellfish'
 }
 
+/**
+ * Lookup table of all ingredient classes
+ */
 const ingredientClassLookupTable: any = {
 	[IngredientClass.FRUIT]: IngredientClass.FRUIT,
 	[IngredientClass.MEAT]: IngredientClass.MEAT,
@@ -22,19 +30,16 @@ const ingredientClassLookupTable: any = {
 	[IngredientClass.SHELLFISH]: IngredientClass.SHELLFISH,
 };
 
-class Ingredient {
-	private static _id: number = -1;
-	public readonly id: number;
+class Ingredient extends Entity<Ingredient> {
 	public readonly name: string;
 	public readonly classification: IngredientClass;
 	private _baked: boolean;
 
 	public constructor(name: string, classification: IngredientClass) {
+		super(name);
 		this.name = name;
 		this._baked = false;
 		this.classification = classification;
-		Ingredient._id += 1;
-		this.id = Ingredient._id;
 	}
 
 	public bake(): Ingredient {
@@ -46,14 +51,12 @@ class Ingredient {
 	get baked(): boolean {
 		return this._baked;
 	}
-
-	get iconClass(): string {
-		const prettyName = this.name.toLowerCase().split(' ').join('-');
-		return `icon-ingredient food icon-${this.classification} ${prettyName}`
-	}
 }
 
-const allIngredientsLookupTable: Ingredient[] =[
+/**
+ * A lookup table for all the ingredients
+ */
+const allIngredientsLookupTable: Ingredient[] = [
 	new Ingredient("Acorn", IngredientClass.FRUIT),
 	new Ingredient("Apple", IngredientClass.FRUIT),
 	new Ingredient("Armoranth", IngredientClass.VEGETABLES),
@@ -138,4 +141,18 @@ const allIngredientsLookupTable: Ingredient[] =[
 	new Ingredient("Zapshroom", IngredientClass.MUSHROOMS),
 ];
 
-export { Ingredient as default, allIngredientsLookupTable, IngredientClass, ingredientClassLookupTable };
+/**
+ * Helper function to get the sprite icon for the ingredient
+ * @param ingredient
+ */
+const getIngredientIconClass = (ingredient: Ingredient): string => {
+	return `icon-ingredient food icon-${ingredient.classification} ${ingredient.id}`
+}
+
+export {
+	Ingredient as default,
+	IngredientClass,
+	allIngredientsLookupTable,
+	ingredientClassLookupTable,
+	getIngredientIconClass
+};

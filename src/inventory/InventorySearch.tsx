@@ -1,4 +1,5 @@
 import React from "react";
+import "./InventorySearch.scss"
 
 interface InventorySearchProps {
 	placeholder?: string,
@@ -7,7 +8,7 @@ interface InventorySearchProps {
 
 const InventorySearch = React.forwardRef<HTMLInputElement, InventorySearchProps>((props: InventorySearchProps, ref) => {
 	return (
-		<div>
+		<div className={"inventory-search"}>
 			<input
 				ref={ref}
 				type={"text"}
