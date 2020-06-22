@@ -1,0 +1,22 @@
+@import "../scss/helpers";
+
+.inventory-tally {
+  margin-bottom: rem(20px);
+
+  .amount {
+	font-weight: 600;
+  }
+
+  ul {
+	column-count: 3;
+	padding: 0;
+	margin: 0;
+
+	li {
+	  margin: 0;
+	  line-height: 2em;
+	  list-style: none;
+	}
+  }
+
+}

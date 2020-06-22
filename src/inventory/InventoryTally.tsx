@@ -1,4 +1,5 @@
 import React from "react";
+import "./InventoryTally.scss";
 import Inventory from "./Inventory";
 import IngredientBundle from "../ingredient/IngredientBundle";
 
@@ -13,15 +14,15 @@ const InventoryTally = (props: InventoryTallyProps) => {
 	};
 
 	return (
-		<section className={"inventory-tally"}>
+		<div className={"inventory-tally"}>
 			<h1>Ingredients Selected: {props.inventory.totalCount}</h1>
 			{props.inventory.totalCount > 0 &&
 				<ul>
 					{props.inventory.items.sort(sortFunc).map(i =>
-						<li key={i.ingredient.id}> {i.amount}x {i.ingredient.name}</li>)}
+						<li key={i.ingredient.id}><span className={"amount"}>{i.amount}</span>x {i.ingredient.name}</li>)}
 				</ul>
 			}
-		</section>
+		</div>
 	);
 };
 
