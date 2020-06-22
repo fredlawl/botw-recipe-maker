@@ -14,13 +14,11 @@ const InventoryTally = (props: InventoryTallyProps) => {
 
 	return (
 		<section className={"inventory-tally"}>
-			<header>
-				<h1>Ingredients Selected: {props.inventory.totalCount}</h1>
-			</header>
+			<h1>Ingredients Selected: {props.inventory.totalCount}</h1>
 			{props.inventory.totalCount > 0 &&
 				<ul>
 					{props.inventory.items.sort(sortFunc).map(i =>
-						<li key={i.ingredient.id}>{i.ingredient.name}: {i.amount}</li>)}
+						<li key={i.ingredient.id}> {i.amount}x {i.ingredient.name}</li>)}
 				</ul>
 			}
 		</section>

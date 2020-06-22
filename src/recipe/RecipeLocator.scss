@@ -1,5 +1,50 @@
 @import "../scss/helpers";
 
 .recipe-locator {
+  display: flex;
 
+  .container {
+	display: flex;
+	flex-direction: row;
+
+	.options,
+	.results {
+	  display: flex;
+	  flex-direction: column;
+	  flex: 1;
+	}
+
+	.options {
+	  flex: 0;
+	  margin-right: rem(20px);
+	  flex: .2 1;
+	}
+  }
+
+  .results {
+	.sort-options {
+	  span {
+		margin-right: rem(10px);
+		display: inline-block;
+	  }
+
+	  button {
+		margin-right: rem(10px);
+		display: inline-block;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+
+		&:hover {
+		  color: lightcoral;
+		}
+
+		&:focus,
+		&:active {
+		  outline: 0;
+		}
+	  }
+	}
+  }
 }
