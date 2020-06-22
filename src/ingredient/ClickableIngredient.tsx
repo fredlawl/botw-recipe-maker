@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./ClickableIngredient.scss";
-import "./Ingredient.css"
+import "./Ingredient.scss"
 import Ingredient, {getIngredientIconClass} from "./Ingredient";
 
 interface props {
