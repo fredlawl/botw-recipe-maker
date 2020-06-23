@@ -31,6 +31,23 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		ReactTooltip.rebuild();
 	}, [searchQuery, selectedTab, inventory]);
 
+	// Create a shortcut "/" to automatically select search element for search
+	useEffect(() => {
+		const onKeyup = (e: KeyboardEvent) => {
+			e.preventDefault();
+			const element = searchElement.current;
+			if (e.key === '/' && element !== document.activeElement) {
+				element?.focus();
+			}
+		};
+
+		document.addEventListener('keyup', onKeyup);
+
+		return () => {
+			document.removeEventListener('keyup', onKeyup);
+		};
+	}, [searchElement]);
+
 	const onIngredientUpdate = (ingredient: Ingredient, previousAmount: number, newAmount: number): void => {
 		const inventoryIngredient = new IngredientBundle(ingredient, newAmount);
 		inventory.addInventoryItem(inventoryIngredient);
@@ -82,7 +99,11 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	return (
 		<section className={"inventory-management"}>
 
-			<InventorySearch onSearchQuery={onSearch} ref={searchElement} />
+			<div className={"inventory-search-wrapper"}>
+				<InventorySearch onSearchQuery={onSearch} ref={searchElement} />
+				<sub>Search Shortcut: "/"</sub>
+			</div>
+
 
 			{/*Tabs*/}
 			<nav className={"inventory-tab-list"}>
