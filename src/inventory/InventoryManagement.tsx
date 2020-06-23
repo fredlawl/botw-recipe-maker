@@ -34,9 +34,9 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	// Create a shortcut "/" to automatically select search element for search
 	useEffect(() => {
 		const onKeyup = (e: KeyboardEvent) => {
-			e.preventDefault();
 			const element = searchElement.current;
 			if (e.key === '/' && element !== document.activeElement) {
+				e.preventDefault();
 				element?.focus();
 			}
 		};
