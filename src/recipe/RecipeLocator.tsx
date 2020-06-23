@@ -48,6 +48,24 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 								Stamina
 							</label>
 						</div>
+						<div className={"field"}>
+							<label>
+								<input type={"checkbox"} name={"boost[defense]"}/>
+								Defense
+							</label>
+						</div>
+						<div className={"field"}>
+							<label>
+								<input type={"checkbox"} name={"boost[speed]"}/>
+								Speed
+							</label>
+						</div>
+						<div className={"field"}>
+							<label>
+								<input type={"checkbox"} name={"boost[stealth]"}/>
+								Stealth
+							</label>
+						</div>
 					</div>
 					<div className={"fieldgroup"}>
 						<span className={"fieldgroup-header"}>Immunity:</span>
