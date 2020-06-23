@@ -18,6 +18,14 @@
 	font-weight: 500;
 	font-family: sans-serif;
 
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+
+	-moz-appearance: textfield;
+
 	&::selection {
 	  background: lightcoral;
 	  text-shadow: none;
