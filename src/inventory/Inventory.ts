@@ -16,20 +16,17 @@ class Inventory {
 		this._items = new Map<string, IngredientBundle>();
 	}
 
-	public addInventoryItem(item: IngredientBundle) {
-		const foundItem = this.item(item);
-		if (foundItem) {
-			this._totalCount -= foundItem.amount;
-		}
+	public addInventoryItem(item: IngredientBundle): boolean {
+		this.remove(item);
 
-		// We remove updated items that have zero amount
+		// Don't add item if there's no amount
 		if (item.amount <= 0) {
-			this._items.delete(item.ingredient.id);
-			return;
+			return false;
 		}
 
 		this._totalCount += item.amount;
 		this._items.set(item.ingredient.id, item);
+		return true;
 	}
 
 	get totalCount(): number {
@@ -48,7 +45,11 @@ class Inventory {
 	}
 
 	public remove(item: IngredientBundle) {
-		this._items.delete(item.ingredient.id);
+		const foundItem = this.item(item);
+		if (foundItem) {
+			this._totalCount -= foundItem.amount;
+			this._items.delete(item.ingredient.id);
+		}
 	}
 
 	public item(item: IngredientBundle): IngredientBundle | undefined {
