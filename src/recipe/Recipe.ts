@@ -1,9 +1,9 @@
-import IngredientBundle from "../ingredient/IngredientBundle";
+import IngredientStack from "../ingredient/IngredientStack";
 import Entity from "../Entity";
 
 class Recipe extends Entity<Recipe> {
 	public readonly name: string;
-	public readonly ingredients: IngredientBundle[];
+	public readonly ingredients: IngredientStack[];
 	private _crafted: boolean;
 
 	public static clone(prevRecipe: Recipe): Recipe {
@@ -12,20 +12,20 @@ class Recipe extends Entity<Recipe> {
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: IngredientBundle[]): Recipe {
+	public static createCrafted(name: string, ingredients: IngredientStack[]): Recipe {
 		const recipe = new Recipe(name, ingredients);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: IngredientBundle[]) {
+	constructor(name: string, ingredients: IngredientStack[]) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
 		this._crafted = false;
 	}
 
-	public craft(inventory: IngredientBundle[]): Recipe {
+	public craft(inventory: IngredientStack[]): Recipe {
 		const cloned = Recipe.clone(this);
 
 		if (cloned.crafted || !this.isCraftable(inventory)) {
@@ -40,7 +40,7 @@ class Recipe extends Entity<Recipe> {
 		return this._crafted;
 	}
 
-	public isCraftable(ingredients: IngredientBundle[]): boolean {
+	public isCraftable(ingredients: IngredientStack[]): boolean {
 		/*
 		 * Technically if a recipe can be pulled from thin air with no
 		 * ingredients, then it's craftable.

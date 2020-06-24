@@ -1,14 +1,14 @@
 import React from "react";
 import "./InventoryTally.scss";
 import Inventory from "./Inventory";
-import IngredientBundle from "../ingredient/IngredientBundle";
+import IngredientStack from "../ingredient/IngredientStack";
 
 interface InventoryTallyProps {
 	inventory: Inventory
 }
 
 const InventoryTally = (props: InventoryTallyProps) => {
-	const sortFunc = (a: IngredientBundle, b: IngredientBundle) => {
+	const sortFunc = (a: IngredientStack, b: IngredientStack) => {
 		if (a.amount === b.amount) return 0;
 		return (a.amount > b.amount) ? -1 : 1;
 	};

@@ -5,10 +5,10 @@ import ClickableIngredient from "../ingredient/ClickableIngredient";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
 import Inventory from "./Inventory";
-import IngredientBundle from "../ingredient/IngredientBundle";
+import IngredientStack from "../ingredient/IngredientStack";
 import InventoryTally from "./InventoryTally";
 
-const availableIngredients: IngredientBundle[] = allIngredientsLookupTable.map(i => new IngredientBundle(i, 0));
+const availableIngredients: IngredientStack[] = allIngredientsLookupTable.map(i => new IngredientStack(i, 0));
 const inventoryTabs: IngredientClass[] = Object.values<IngredientClass>(ingredientClassLookupTable);
 
 interface InventoryViewProps {
@@ -49,7 +49,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	}, [searchElement]);
 
 	const onIngredientUpdate = (ingredient: Ingredient, previousAmount: number, newAmount: number): void => {
-		const inventoryIngredient = new IngredientBundle(ingredient, newAmount);
+		const inventoryIngredient = new IngredientStack(ingredient, newAmount);
 		inventory.addInventoryItem(inventoryIngredient);
 		inventoryUpdated();
 	};

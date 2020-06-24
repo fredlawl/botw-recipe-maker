@@ -1,6 +1,6 @@
 import Ingredient from "./Ingredient";
 
-class IngredientBundle {
+class IngredientStack {
 	public readonly ingredient: Ingredient;
 	public readonly amount: number;
 	constructor(ingredient: Ingredient, amount: number) {
@@ -9,4 +9,4 @@ class IngredientBundle {
 	}
 }
 
-export default IngredientBundle;
+export default IngredientStack;
