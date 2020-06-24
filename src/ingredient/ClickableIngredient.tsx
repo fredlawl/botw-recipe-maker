@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import "./ClickableIngredient.scss";
 import "./Ingredient.scss"
 import Ingredient, {getIngredientIconClass} from "./Ingredient";
+import IngredientStack from "./IngredientStack";
 
 interface props {
 	ingredient: Ingredient,
@@ -10,22 +11,16 @@ interface props {
 }
 
 const ClickableIngredient = (props: props) => {
-	const AMNT_MIN: number = 0;
-	const AMNT_MAX: number = 100;
-
-	const clampAmount = (amnt: number): number => {
-		amnt = (amnt < AMNT_MAX) ? amnt : AMNT_MAX;
-		return (amnt >= AMNT_MIN) ? amnt : AMNT_MIN;
-	}
-
-	const [amount, setAmount] = useState(clampAmount(props.initialAmount || 0));
+	const [amount, setAmount] = useState(IngredientStack.clamp(props.initialAmount || 0));
 
 	const updateAmount = (newAmount: number) => {
-		const prevAmount = amount;
-		newAmount = clampAmount(newAmount);
+		if (isNaN(newAmount)) {
+			newAmount = 0;
+		}
 
+		newAmount = IngredientStack.clamp(newAmount);
 		if (props.onAmountUpdated) {
-			props.onAmountUpdated(props.ingredient, prevAmount, newAmount);
+			props.onAmountUpdated(props.ingredient, amount, newAmount);
 		}
 
 		setAmount(newAmount);
@@ -43,8 +38,8 @@ const ClickableIngredient = (props: props) => {
 				onChange={e => updateAmount(parseInt(e.target.value))}
 				onFocus={e => e.target.select()}
 				type={"number"}
-				min={AMNT_MIN}
-				max={AMNT_MAX}
+				min={IngredientStack.STACK_MIN}
+				max={IngredientStack.STACK_MAX}
 				value={amount}
 				className={"numberInInventory"}/>
 		</div>
