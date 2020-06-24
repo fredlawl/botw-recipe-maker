@@ -62,3 +62,17 @@ describe("Inventory.remove()", () => {
 		expect(inventory.totalCount).toBe(0);
 	});
 });
+
+describe("Inventory.clear()", () => {
+	test("clears inventory", () => {
+		const inventory = new Inventory();
+		const strawberry = new Ingredient("Strawberry", IngredientClass.FRUIT);
+		const banana = new Ingredient("Banana", IngredientClass.FRUIT);
+		inventory.addInventoryItem(new IngredientBundle(strawberry, 20));
+		inventory.addInventoryItem(new IngredientBundle(banana, 20));
+		const clearedItems = inventory.clear();
+		expect(inventory.totalCount).toBe(0);
+		expect(inventory.items.length).toBe(0);
+		expect(clearedItems.length).toBe(2);
+	});
+});
