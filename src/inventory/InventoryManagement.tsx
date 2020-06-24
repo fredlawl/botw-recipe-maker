@@ -48,9 +48,8 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		};
 	}, [searchElement]);
 
-	const onIngredientUpdate = (ingredient: Ingredient, previousAmount: number, newAmount: number): void => {
-		const inventoryIngredient = new IngredientStack(ingredient, newAmount);
-		inventory.addInventoryItem(inventoryIngredient);
+	const onIngredientUpdate = (prevStack: IngredientStack, curStack: IngredientStack): void => {
+		inventory.addInventoryItem(curStack);
 		inventoryUpdated();
 	};
 

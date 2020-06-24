@@ -7,23 +7,25 @@ import IngredientStack from "./IngredientStack";
 interface props {
 	ingredient: Ingredient,
 	initialAmount?: number,
-	onAmountUpdated?: (ingredient: Ingredient, previousAmount: number, newAmount: number) => void
+	onAmountUpdated?: (prevStack: IngredientStack, curStack: IngredientStack) => void
 }
 
 const ClickableIngredient = (props: props) => {
-	const [amount, setAmount] = useState(IngredientStack.clamp(props.initialAmount || 0));
+	const [stack, setStack] = useState(
+		new IngredientStack(props.ingredient, IngredientStack.clamp(props.initialAmount || 0))
+	);
 
 	const updateAmount = (newAmount: number) => {
 		if (isNaN(newAmount)) {
 			newAmount = 0;
 		}
 
-		newAmount = IngredientStack.clamp(newAmount);
+		const newStack = new IngredientStack(props.ingredient, newAmount);
 		if (props.onAmountUpdated) {
-			props.onAmountUpdated(props.ingredient, amount, newAmount);
+			props.onAmountUpdated(stack, newStack);
 		}
 
-		setAmount(newAmount);
+		setStack(newStack);
 	};
 
 	return (
@@ -33,14 +35,14 @@ const ClickableIngredient = (props: props) => {
 				data-tip={props.ingredient.name}
 				className={getIngredientIconClass(props.ingredient)}
 				title={props.ingredient.name}
-				onClick={() => updateAmount(amount + 1)}/>
+				onClick={() => updateAmount(stack.amount + 1)}/>
 			<input
 				onChange={e => updateAmount(parseInt(e.target.value))}
 				onFocus={e => e.target.select()}
 				type={"number"}
 				min={IngredientStack.STACK_MIN}
 				max={IngredientStack.STACK_MAX}
-				value={amount}
+				value={stack.amount}
 				className={"numberInInventory"}/>
 		</div>
 	);
