@@ -42,6 +42,8 @@ class Recipe extends Entity<Recipe> implements Item {
 	}
 
 	public isCraftable(ingredients: ItemStack[]): boolean {
+		let numberOfMatchedIngredients = 0;
+
 		/*
 		 * Technically if a recipe can be pulled from thin air with no
 		 * ingredients, then it's craftable.
@@ -53,17 +55,16 @@ class Recipe extends Entity<Recipe> implements Item {
 		const mappedRecipeIngredients = new Map<string, number>(
 			this.ingredients.map(i => [i.item.id, i.stack]));
 
-		for (const passedIngredient of ingredients) {
-			const currentAmount = mappedRecipeIngredients.get(passedIngredient.item.id);
-			if (currentAmount === undefined) {
+		for (const ingredient of ingredients) {
+			const recipeIngredientAmount = mappedRecipeIngredients.get(ingredient.item.id);
+			if (recipeIngredientAmount === undefined) {
 				continue;
 			}
 
-			mappedRecipeIngredients.set(passedIngredient.item.id, currentAmount - passedIngredient.stack);
+			numberOfMatchedIngredients += Number((recipeIngredientAmount - ingredient.stack) <= 0);
 		}
 
-		return Array.from(mappedRecipeIngredients.values())
-			.filter(x  => x <= 0).length === mappedRecipeIngredients.size;
+		return numberOfMatchedIngredients === mappedRecipeIngredients.size;
 	}
 
 	get type(): ItemType {
