@@ -1,15 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./InventoryManagement.scss"
-import Ingredient, {allIngredientsLookupTable, IngredientClass, ingredientClassLookupTable} from "../ingredient/Ingredient";
-import ClickableIngredient from "../ingredient/ClickableIngredient";
+import {allIngredientsLookupTable, IngredientClass, ingredientClassLookupTable} from "./Ingredient";
+import ClickableIngredient from "../item/ClickableItem";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
 import Inventory from "./Inventory";
-import IngredientStack from "../ingredient/IngredientStack";
+import ItemStack from "../item/ItemStack";
 import InventoryTally from "./InventoryTally";
 
-const availableIngredients: IngredientStack[] = allIngredientsLookupTable.map(i => new IngredientStack(i, 0));
+const availableIngredients: ItemStack[] = allIngredientsLookupTable.map(i => new ItemStack(i, 0));
 const inventoryTabs: IngredientClass[] = Object.values<IngredientClass>(ingredientClassLookupTable);
+const ingredientToIngredientClassLookupTable = new Map<string, IngredientClass>(
+	allIngredientsLookupTable.map(i => [i.id, i.classification])
+);
 
 interface InventoryViewProps {
 	inventory: Inventory,
@@ -48,7 +51,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		};
 	}, [searchElement]);
 
-	const onIngredientUpdate = (prevStack: IngredientStack, curStack: IngredientStack): void => {
+	const onIngredientUpdate = (prevStack: ItemStack, curStack: ItemStack): void => {
 		inventory.addInventoryItem(curStack);
 		inventoryUpdated();
 	};
@@ -122,8 +125,8 @@ const InventoryManagement = (props: InventoryViewProps) => {
 							return (
 								<div className={`grid inventory-tab tab-${t} ${selectedTab === t ? 'shown' : ''}`} key={`inventory-content-tab-${t}`}>
 									{availableIngredients
-										.filter(i => i.ingredient.classification === t)
-										.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
+										.filter(i => ingredientToIngredientClassLookupTable.get(i.item.id) === t)
+										.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i)?.stack || 0} />)}
 								</div>
 							);
 						})}
@@ -133,8 +136,8 @@ const InventoryManagement = (props: InventoryViewProps) => {
 				{searchQuery.length > 0 &&
 					<div className={`grid`}>
 						{availableIngredients
-							.filter(i => i.ingredient.name.toLowerCase().includes(searchQuery))
-							.map(i => <ClickableIngredient key={`${i.ingredient.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} ingredient={i.ingredient} initialAmount={inventory.item(i)?.amount || 0} />)}
+							.filter(i => i.item.name.toLowerCase().includes(searchQuery))
+							.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i)?.stack || 0} />)}
 					</div>
 				}
 			</div>

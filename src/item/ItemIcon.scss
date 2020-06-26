@@ -14,18 +14,15 @@ $food-ingredient-y-offset: -15px;
 }
 
 @mixin foodSprite($xOffset, $yOffset) {
+  background-image: url("/sprites/ingredients/food-ingredients.png");
   background-position-x: (($xOffset + 1) * $food-ingredient-x-offset) - xOffset($xOffset);
   background-position-y: (($yOffset + 1) * $food-ingredient-y-offset) - xOffset($yOffset);
 }
 
-.icon-ingredient {
+.icon-item {
   width: $icon-width;
   height: $icon-height;
   display: block;
-}
-
-.food {
-  background-image: url("/sprites/ingredients/food-ingredients.png");
 
   // ---------------------------------------------------------------------------
   // Fruit
@@ -274,194 +271,6 @@ $food-ingredient-y-offset: -15px;
 	@include foodSprite(7, 10);
 	background-position-y: (-15 * 10) - (10 * $icon-height);
   }
-}
-
-.icon-ingredient.food.bladed-rhino-beetle {
-
-}
-
-.icon-ingredient.food.blue-nightshade {
-  background-position-x: -680px;
-}
-
-.icon-ingredient.food.bright-eyed-crab {
-  background-position-x: -680px;
-}
-
-.icon-ingredient.food.cane-sugar {
-
-}
-
-.icon-ingredient.food.cold-darner {
-
-}
-
-.icon-ingredient.food.cool-safflina {
-
-}
-
-.icon-ingredient.food.courser-bee-honey {
-
-}
-
-.icon-ingredient.food.electric-darner {
-
-}
-
-.icon-ingredient.food.electric-safflina {
-
-}
-
-.icon-ingredient.food.energetic-rhino-beetle {
-
-}
-
-.icon-ingredient.food.fairy {
-
-}
-
-.icon-ingredient.food.fireproof-lizard {
-
-}
-
-.icon-ingredient.food.fortified-pumpkin {
-
-}
-
-.icon-ingredient.food.fresh-milk {
-
-}
-
-.icon-ingredient.food.goat-butter {
-
-}
-
-.icon-ingredient.food.goron-spice {
-
-}
-
-.icon-ingredient.food.hearty-blueshell-snail {
-
-}
-
-.icon-ingredient.food.hearty-durian {
-
-}
-
-.icon-ingredient.food.hearty-lizard {
-
-}
-
-.icon-ingredient.food.hearty-salmon {
-
-}
-
-.icon-ingredient.food.hearty-truffle {
-
-}
-
-.icon-ingredient.food.hightail-lizard {
-
-}
-
-.icon-ingredient.food.hot-footed-frog {
-
-}
-
-.icon-ingredient.food.hylian-rice {
-
-}
-
-.icon-ingredient.food.hylian-shroom {
-
-}
-
-.icon-ingredient.food.hyrule-herb {
-
-}
-
-.icon-ingredient.food.ironshell-crab {
-
-}
-
-.icon-ingredient.food.monster-extract {
-
-}
-
-.icon-ingredient.food.razorclaw-crab {
-
-}
-
-.icon-ingredient.food.razorshroom {
-
-}
-
-.icon-ingredient.food.restless-cricket {
-
-}
-
-.icon-ingredient.food.rugged-rhino-beetle {
-
-}
-
-.icon-ingredient.food.silent-princess {
-
-}
-
-.icon-ingredient.food.smotherwing-butterfly {
-
-}
-
-.icon-ingredient.food.sneaky-river-snail {
-
-}
-
-.icon-ingredient.food.spicy-pepper {
-
-}
-
-.icon-ingredient.food.summerwing-butterfly {
-
-}
-
-.icon-ingredient.food.sunset-firefly {
-
-}
-
-.icon-ingredient.food.swift-carrot {
-
-}
-
-.icon-ingredient.food.swift-violet {
-
-}
-
-.icon-ingredient.food.tabantha-wheat {
-
-}
-
-.icon-ingredient.food.thunderwing-butterfly {
-
-}
-
-.icon-ingredient.food.tireless-frog {
-
-}
-
-.icon-ingredient.food.voltfin-trout {
-
-}
-
-.icon-ingredient.food.warm-darner {
-
-}
-
-.icon-ingredient.food.warm-safflina {
-
-}
-
-.icon-ingredient.food.winterwing-butterfly {
-
 }
 
 .monster {

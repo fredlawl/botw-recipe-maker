@@ -1,16 +1,16 @@
 import React from "react";
 import "./InventoryTally.scss";
 import Inventory from "./Inventory";
-import IngredientStack from "../ingredient/IngredientStack";
+import ItemStack from "../item/ItemStack";
 
 interface InventoryTallyProps {
 	inventory: Inventory
 }
 
 const InventoryTally = (props: InventoryTallyProps) => {
-	const sortFunc = (a: IngredientStack, b: IngredientStack) => {
-		if (a.amount === b.amount) return 0;
-		return (a.amount > b.amount) ? -1 : 1;
+	const sortFunc = (a: ItemStack, b: ItemStack) => {
+		if (a.stack === b.stack) return 0;
+		return (a.stack > b.stack) ? -1 : 1;
 	};
 
 	return (
@@ -19,7 +19,7 @@ const InventoryTally = (props: InventoryTallyProps) => {
 			{props.inventory.totalCount > 0 &&
 				<ul>
 					{props.inventory.items.sort(sortFunc).map(i =>
-						<li key={i.ingredient.id}><span className={"amount"}>{i.amount}</span>x {i.ingredient.name}</li>)}
+						<li key={i.item.id}><span className={"amount"}>{i.stack}</span>x {i.item.name}</li>)}
 				</ul>
 			}
 		</div>

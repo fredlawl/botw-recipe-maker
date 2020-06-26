@@ -1,7 +1,8 @@
 import Entity from "../Entity";
+import Item, {ItemType} from "../item/Item";
 
 /**
- * Describes the type of the ingredient
+ * Describes the type of the item
  */
 enum IngredientClass {
 	FRUIT = 'fruit',
@@ -15,7 +16,7 @@ enum IngredientClass {
 }
 
 /**
- * Lookup table of all ingredient classes
+ * Lookup table of all item classes
  */
 const ingredientClassLookupTable: any = {
 	[IngredientClass.FRUIT]: IngredientClass.FRUIT,
@@ -29,7 +30,7 @@ const ingredientClassLookupTable: any = {
 	[IngredientClass.FISH]: IngredientClass.FISH,
 };
 
-class Ingredient extends Entity<Ingredient> {
+class Ingredient extends Entity<Ingredient> implements Item {
 	public readonly name: string;
 	public readonly classification: IngredientClass;
 	private _baked: boolean;
@@ -49,6 +50,10 @@ class Ingredient extends Entity<Ingredient> {
 
 	get baked(): boolean {
 		return this._baked;
+	}
+
+	get type(): ItemType {
+		return ItemType.MATERIAL;
 	}
 }
 
@@ -146,18 +151,9 @@ const allIngredientsLookupTable: Ingredient[] = [
 	new Ingredient("Zapshroom", IngredientClass.SHROOMS),
 ];
 
-/**
- * Helper function to get the sprite icon for the ingredient
- * @param ingredient
- */
-const getIngredientIconClass = (ingredient: Ingredient): string => {
-	return `icon-ingredient food icon-${ingredient.classification} ${ingredient.id}`
-}
-
 export {
 	Ingredient as default,
 	IngredientClass,
 	allIngredientsLookupTable,
-	ingredientClassLookupTable,
-	getIngredientIconClass
+	ingredientClassLookupTable
 };

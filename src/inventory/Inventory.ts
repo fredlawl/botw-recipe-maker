@@ -1,31 +1,31 @@
-import IngredientStack from "../ingredient/IngredientStack";
+import ItemStack from "../item/ItemStack";
 
 class Inventory {
 	private _totalCount: number;
-	private _items: Map<string, IngredientStack>;
+	private _items: Map<string, ItemStack>;
 
 	public static clone(prevInventory: Inventory): Inventory {
 		const newInventory = new Inventory();
 		newInventory._totalCount = prevInventory.totalCount;
-		newInventory._items = new Map<string, IngredientStack>(prevInventory._items);
+		newInventory._items = new Map<string, ItemStack>(prevInventory._items);
 		return newInventory;
 	}
 
 	public constructor() {
 		this._totalCount = 0;
-		this._items = new Map<string, IngredientStack>();
+		this._items = new Map<string, ItemStack>();
 	}
 
-	public addInventoryItem(item: IngredientStack): boolean {
+	public addInventoryItem(item: ItemStack): boolean {
 		this.remove(item);
 
-		// Don't add item if there's no amount
-		if (item.amount <= 0) {
+		// Don't add item if there's no stack
+		if (item.stack <= 0) {
 			return false;
 		}
 
-		this._totalCount += item.amount;
-		this._items.set(item.ingredient.id, item);
+		this._totalCount += item.stack;
+		this._items.set(item.item.id, item);
 		return true;
 	}
 
@@ -33,27 +33,27 @@ class Inventory {
 		return this._totalCount;
 	}
 
-	get items(): IngredientStack[] {
+	get items(): ItemStack[] {
 		return Array.from(this._items.values());
 	}
 
-	public clear(): IngredientStack[] {
+	public clear(): ItemStack[] {
 		let currentInventory = this.items;
-		this._items = new Map<string, IngredientStack>();
+		this._items = new Map<string, ItemStack>();
 		this._totalCount = 0;
 		return currentInventory;
 	}
 
-	public remove(item: IngredientStack) {
+	public remove(item: ItemStack) {
 		const foundItem = this.item(item);
 		if (foundItem) {
-			this._totalCount -= foundItem.amount;
-			this._items.delete(item.ingredient.id);
+			this._totalCount -= foundItem.stack;
+			this._items.delete(item.item.id);
 		}
 	}
 
-	public item(item: IngredientStack): IngredientStack | undefined {
-		return this._items.get(item.ingredient.id);
+	public item(item: ItemStack): ItemStack | undefined {
+		return this._items.get(item.item.id);
 	}
 }
 

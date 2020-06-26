@@ -1,9 +1,10 @@
-import IngredientStack from "../ingredient/IngredientStack";
+import ItemStack from "../item/ItemStack";
 import Entity from "../Entity";
+import Item, {ItemType} from "../item/Item";
 
-class Recipe extends Entity<Recipe> {
+class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
-	public readonly ingredients: IngredientStack[];
+	public readonly ingredients: ItemStack[];
 	private _crafted: boolean;
 
 	public static clone(prevRecipe: Recipe): Recipe {
@@ -12,20 +13,20 @@ class Recipe extends Entity<Recipe> {
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: IngredientStack[]): Recipe {
+	public static createCrafted(name: string, ingredients: ItemStack[]): Recipe {
 		const recipe = new Recipe(name, ingredients);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: IngredientStack[]) {
+	constructor(name: string, ingredients: ItemStack[]) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
 		this._crafted = false;
 	}
 
-	public craft(inventory: IngredientStack[]): Recipe {
+	public craft(inventory: ItemStack[]): Recipe {
 		const cloned = Recipe.clone(this);
 
 		if (cloned.crafted || !this.isCraftable(inventory)) {
@@ -40,7 +41,7 @@ class Recipe extends Entity<Recipe> {
 		return this._crafted;
 	}
 
-	public isCraftable(ingredients: IngredientStack[]): boolean {
+	public isCraftable(ingredients: ItemStack[]): boolean {
 		/*
 		 * Technically if a recipe can be pulled from thin air with no
 		 * ingredients, then it's craftable.
@@ -50,19 +51,23 @@ class Recipe extends Entity<Recipe> {
 		}
 
 		const mappedRecipeIngredients = new Map<string, number>(
-			this.ingredients.map(i => [i.ingredient.id, i.amount]));
+			this.ingredients.map(i => [i.item.id, i.stack]));
 
 		for (const passedIngredient of ingredients) {
-			const currentAmount = mappedRecipeIngredients.get(passedIngredient.ingredient.id);
+			const currentAmount = mappedRecipeIngredients.get(passedIngredient.item.id);
 			if (currentAmount === undefined) {
 				continue;
 			}
 
-			mappedRecipeIngredients.set(passedIngredient.ingredient.id, currentAmount - passedIngredient.amount);
+			mappedRecipeIngredients.set(passedIngredient.item.id, currentAmount - passedIngredient.stack);
 		}
 
 		return Array.from(mappedRecipeIngredients.values())
 			.filter(x  => x <= 0).length === mappedRecipeIngredients.size;
+	}
+
+	get type(): ItemType {
+		return ItemType.CONSUMABLE;
 	}
 }
 
