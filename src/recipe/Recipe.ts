@@ -1,14 +1,15 @@
 import ItemStack from "../item/ItemStack";
 import Entity from "../Entity";
-import Item, {ImmunityBuffType, ItemType, EffectType} from "../item/Item";
+import Item, {ImmunityBuffType, ItemType} from "../item/Item";
 import Ingredient from "../inventory/Ingredient";
+import Effect from "../item/Effect";
 
 class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
 	public readonly ingredients: ItemStack<Ingredient>[];
 
 	private _immunity: ImmunityBuffType;
-	private _effect: EffectType;
+	private _effect: Effect;
 	private _crafted: boolean;
 
 	public static clone(prevRecipe: Recipe): Recipe {
@@ -17,19 +18,19 @@ class Recipe extends Entity<Recipe> implements Item {
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: EffectType): Recipe {
+	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: Effect): Recipe {
 		const recipe = new Recipe(name, ingredients, immunity, effect);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: EffectType) {
+	constructor(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: Effect) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
 		this._crafted = false;
 		this._immunity = (immunity === undefined) ? ImmunityBuffType.NONE : immunity;
-		this._effect = (effect === undefined) ? EffectType.NONE : effect;
+		this._effect = (effect === undefined) ? Effect.none() : effect;
 	}
 
 	public craft(inventory: ItemStack<Ingredient>[]): Recipe {
@@ -81,7 +82,7 @@ class Recipe extends Entity<Recipe> implements Item {
 		return this._immunity;
 	}
 
-	get effect(): EffectType {
+	get effect(): Effect {
 		return this._effect;
 	}
 }

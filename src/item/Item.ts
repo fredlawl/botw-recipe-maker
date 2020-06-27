@@ -1,3 +1,5 @@
+import Effect from "./Effect";
+
 export enum ItemType {
 	MATERIAL = 1,
 	CONSUMABLE
@@ -15,7 +17,7 @@ export default interface Item {
 	name: string,
 	type: ItemType,
 	immunity: ImmunityBuffType,
-	effect: EffectType
+	effect: Effect
 }
 
 const immunityBuffTypeLookupTable: any = {
