@@ -50,6 +50,12 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 						</div>
 						<div className={"field"}>
 							<label>
+								<input type={"checkbox"} name={"boost[attack]"}/>
+								Defense
+							</label>
+						</div>
+						<div className={"field"}>
+							<label>
 								<input type={"checkbox"} name={"boost[defense]"}/>
 								Defense
 							</label>

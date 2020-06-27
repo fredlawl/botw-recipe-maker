@@ -13,6 +13,7 @@ export enum EffectType {
 export enum StatsType {
 	NONE,
 	HEALTH,
+	ATTACK,
 	STAMINA,
 	SPEED,
 	DEFENSE,
@@ -38,6 +39,7 @@ const statsTypeLookupTable: any = {
 	[StatsType.NONE]: StatsType.NONE,
 	[StatsType.HEALTH]: StatsType.HEALTH,
 	[StatsType.STAMINA]: StatsType.STAMINA,
+	[StatsType.ATTACK]: StatsType.ATTACK,
 	[StatsType.SPEED]: StatsType.SPEED,
 	[StatsType.DEFENSE]: StatsType.DEFENSE,
 	[StatsType.STEALTH]: StatsType.STEALTH,
