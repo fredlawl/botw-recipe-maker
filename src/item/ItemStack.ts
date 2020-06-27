@@ -1,10 +1,10 @@
 import Item from "./Item";
 
-class ItemStack {
+class ItemStack<T extends Item> {
 	public static readonly STACK_MIN: number = 0;
 	public static readonly STACK_MAX: number = 999;
 
-	public readonly item: Item;
+	public readonly item: T;
 	public readonly stack: number;
 
 	public static clamp = (amount: number): number => {
@@ -12,7 +12,7 @@ class ItemStack {
 		return (amount >= ItemStack.STACK_MIN) ? amount : ItemStack.STACK_MIN;
 	}
 
-	constructor(ingredient: Item, amount: number) {
+	constructor(ingredient: T, amount: number) {
 		this.item = ingredient;
 		this.stack = ItemStack.clamp(amount);
 	}

@@ -8,7 +8,7 @@ import {getItemIconClass} from "./utility";
 interface props {
 	item: Item,
 	initialAmount?: number,
-	onAmountUpdated?: (prevStack: ItemStack, curStack: ItemStack) => void
+	onAmountUpdated?: (prevStack: ItemStack<Item>, curStack: ItemStack<Item>) => void
 }
 
 const ClickableItem = (props: props) => {

@@ -1,10 +1,11 @@
 import ItemStack from "../item/ItemStack";
 import Entity from "../Entity";
 import Item, {EffectType, ItemType, StatsType} from "../item/Item";
+import Ingredient from "../inventory/Ingredient";
 
 class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
-	public readonly ingredients: ItemStack[];
+	public readonly ingredients: ItemStack<Ingredient>[];
 
 	private _effect: EffectType;
 	private _stats: StatsType;
@@ -16,13 +17,13 @@ class Recipe extends Entity<Recipe> implements Item {
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: ItemStack[], effect?: EffectType, stats?: StatsType): Recipe {
+	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], effect?: EffectType, stats?: StatsType): Recipe {
 		const recipe = new Recipe(name, ingredients, effect, stats);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: ItemStack[], effect?: EffectType, stats?: StatsType) {
+	constructor(name: string, ingredients: ItemStack<Ingredient>[], effect?: EffectType, stats?: StatsType) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
@@ -31,7 +32,7 @@ class Recipe extends Entity<Recipe> implements Item {
 		this._stats = (stats === undefined) ? StatsType.NONE : stats;
 	}
 
-	public craft(inventory: ItemStack[]): Recipe {
+	public craft(inventory: ItemStack<Ingredient>[]): Recipe {
 		const cloned = Recipe.clone(this);
 
 		if (cloned.crafted || !this.isCraftable(inventory)) {
@@ -46,7 +47,7 @@ class Recipe extends Entity<Recipe> implements Item {
 		return this._crafted;
 	}
 
-	public isCraftable(ingredients: ItemStack[]): boolean {
+	public isCraftable(ingredients: ItemStack<Ingredient>[]): boolean {
 		let numberOfMatchedIngredients = 0;
 
 		/*

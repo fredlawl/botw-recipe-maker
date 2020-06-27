@@ -2,13 +2,14 @@ import React from "react";
 import "./InventoryTally.scss";
 import Inventory from "./Inventory";
 import ItemStack from "../item/ItemStack";
+import Item from "../item/Item";
 
 interface InventoryTallyProps {
 	inventory: Inventory
 }
 
 const InventoryTally = (props: InventoryTallyProps) => {
-	const sortFunc = (a: ItemStack, b: ItemStack) => {
+	const sortFunc = (a: ItemStack<Item>, b: ItemStack<Item>) => {
 		if (a.stack === b.stack) return 0;
 		return (a.stack > b.stack) ? -1 : 1;
 	};
