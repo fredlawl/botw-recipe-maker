@@ -1,35 +1,35 @@
 import ItemStack from "../item/ItemStack";
 import Entity from "../Entity";
-import Item, {EffectType, ItemType, StatsType} from "../item/Item";
+import Item, {ImmunityBuffType, ItemType, EffectType} from "../item/Item";
 import Ingredient from "../inventory/Ingredient";
 
 class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
 	public readonly ingredients: ItemStack<Ingredient>[];
 
+	private _immunity: ImmunityBuffType;
 	private _effect: EffectType;
-	private _stats: StatsType;
 	private _crafted: boolean;
 
 	public static clone(prevRecipe: Recipe): Recipe {
-		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients, prevRecipe._effect, prevRecipe._stats);
+		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients, prevRecipe._immunity, prevRecipe._effect);
 		newRecipe._id = prevRecipe._id;
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], effect?: EffectType, stats?: StatsType): Recipe {
-		const recipe = new Recipe(name, ingredients, effect, stats);
+	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: EffectType): Recipe {
+		const recipe = new Recipe(name, ingredients, immunity, effect);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: ItemStack<Ingredient>[], effect?: EffectType, stats?: StatsType) {
+	constructor(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: EffectType) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
 		this._crafted = false;
+		this._immunity = (immunity === undefined) ? ImmunityBuffType.NONE : immunity;
 		this._effect = (effect === undefined) ? EffectType.NONE : effect;
-		this._stats = (stats === undefined) ? StatsType.NONE : stats;
 	}
 
 	public craft(inventory: ItemStack<Ingredient>[]): Recipe {
@@ -77,12 +77,12 @@ class Recipe extends Entity<Recipe> implements Item {
 		return ItemType.CONSUMABLE;
 	}
 
-	get effect(): EffectType {
-		return this._effect;
+	get immunity(): ImmunityBuffType {
+		return this._immunity;
 	}
 
-	get stats(): StatsType {
-		return this._stats;
+	get effect(): EffectType {
+		return this._effect;
 	}
 }
 

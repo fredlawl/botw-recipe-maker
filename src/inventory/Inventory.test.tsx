@@ -2,13 +2,13 @@ import React from 'react';
 import Inventory from "./Inventory";
 import ItemStack from "../item/ItemStack";
 import Ingredient, {CategoryType} from "./Ingredient"
-import {EffectType, StatsType} from "../item/Item";
+import {ImmunityBuffType, EffectType} from "../item/Item";
 
 describe("Inventory.addInventoryItem()", () => {
 	test("add inventory item works with 1 item", () => {
 		const expectedStack = 20;
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		const ingredientStack = new ItemStack(strawberry, expectedStack);
 		inventory.addInventoryItem(ingredientStack);
 
@@ -19,7 +19,7 @@ describe("Inventory.addInventoryItem()", () => {
 	test("add inventory does not add with 0 stack", () => {
 		const expectedStack = 0;
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		const ingredientStack = new ItemStack(strawberry, expectedStack);
 		inventory.addInventoryItem(ingredientStack);
 
@@ -29,8 +29,8 @@ describe("Inventory.addInventoryItem()", () => {
 
 	test("add inventory works with more than 1 item", () => {
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
-		const banana = new Ingredient("Banana", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
+		const banana = new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		inventory.addInventoryItem(new ItemStack(strawberry, 20));
 		inventory.addInventoryItem(new ItemStack(banana, 20));
 
@@ -40,7 +40,7 @@ describe("Inventory.addInventoryItem()", () => {
 
 	test("add inventory works with adding same item", () => {
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		inventory.addInventoryItem(new ItemStack(strawberry, 20));
 		inventory.addInventoryItem(new ItemStack(strawberry, 30));
 
@@ -52,7 +52,7 @@ describe("Inventory.remove()", () => {
 	test("removal of inventory decreases total stack", () => {
 		const expectedStack = 20;
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		const ingredientStack = new ItemStack(strawberry, expectedStack);
 		inventory.addInventoryItem(ingredientStack);
 
@@ -67,8 +67,8 @@ describe("Inventory.remove()", () => {
 describe("Inventory.clear()", () => {
 	test("clears inventory", () => {
 		const inventory = new Inventory();
-		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
-		const banana = new Ingredient("Banana", CategoryType.FRUIT, EffectType.NONE, StatsType.NONE);
+		const strawberry = new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
+		const banana = new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, EffectType.NONE);
 		inventory.addInventoryItem(new ItemStack(strawberry, 20));
 		inventory.addInventoryItem(new ItemStack(banana, 20));
 		const clearedItems = inventory.clear();

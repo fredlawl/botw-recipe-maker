@@ -3,14 +3,14 @@ export enum ItemType {
 	CONSUMABLE
 }
 
-export enum EffectType {
+export enum ImmunityBuffType {
 	NONE,
 	FREEZE,
 	FIRE,
 	ELECTRIC,
 }
 
-export enum StatsType {
+export enum EffectType {
 	NONE,
 	HEALTH,
 	ATTACK,
@@ -24,25 +24,25 @@ export default interface Item {
 	id: string,
 	name: string,
 	type: ItemType,
-	effect: EffectType,
-	stats: StatsType
+	immunity: ImmunityBuffType,
+	effect: EffectType
 }
+
+const immunityBuffTypeLookupTable: any = {
+	[ImmunityBuffType.NONE]: ImmunityBuffType.NONE,
+	[ImmunityBuffType.FREEZE]: ImmunityBuffType.FREEZE,
+	[ImmunityBuffType.FIRE]: ImmunityBuffType.FIRE,
+	[ImmunityBuffType.ELECTRIC]: ImmunityBuffType.ELECTRIC,
+};
 
 const effectTypeLookupTable: any = {
 	[EffectType.NONE]: EffectType.NONE,
-	[EffectType.FREEZE]: EffectType.FREEZE,
-	[EffectType.FIRE]: EffectType.FIRE,
-	[EffectType.ELECTRIC]: EffectType.ELECTRIC,
+	[EffectType.HEALTH]: EffectType.HEALTH,
+	[EffectType.STAMINA]: EffectType.STAMINA,
+	[EffectType.ATTACK]: EffectType.ATTACK,
+	[EffectType.SPEED]: EffectType.SPEED,
+	[EffectType.DEFENSE]: EffectType.DEFENSE,
+	[EffectType.STEALTH]: EffectType.STEALTH,
 };
 
-const statsTypeLookupTable: any = {
-	[StatsType.NONE]: StatsType.NONE,
-	[StatsType.HEALTH]: StatsType.HEALTH,
-	[StatsType.STAMINA]: StatsType.STAMINA,
-	[StatsType.ATTACK]: StatsType.ATTACK,
-	[StatsType.SPEED]: StatsType.SPEED,
-	[StatsType.DEFENSE]: StatsType.DEFENSE,
-	[StatsType.STEALTH]: StatsType.STEALTH,
-};
-
-export { effectTypeLookupTable, statsTypeLookupTable };
+export { immunityBuffTypeLookupTable, effectTypeLookupTable };
