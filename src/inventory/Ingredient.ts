@@ -84,7 +84,7 @@ const allIngredientsLookupTable: Ingredient[] = [
 	new Ingredient("Endura Carrot", IngredientClass.VEGETABLES),
 	new Ingredient("Endura Shroom", IngredientClass.SHROOMS),
 	new Ingredient("Energetic Rhino Beetle", IngredientClass.BUG),
-	new Ingredient("Fairy", IngredientClass.MATERIAL),
+	new Ingredient("Fairy", IngredientClass.BUG),
 	new Ingredient("Fireproof Lizard", IngredientClass.REPTILE),
 	new Ingredient("Fleet-Lotus Seeds", IngredientClass.FRUIT),
 	new Ingredient("Fortified Pumpkin", IngredientClass.FRUIT),

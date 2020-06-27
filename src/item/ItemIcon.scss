@@ -13,10 +13,20 @@ $food-ingredient-y-offset: -15px;
   @return $offset * $icon-height;
 }
 
-@mixin foodSprite($xOffset, $yOffset) {
-  background-image: url("/sprites/ingredients/food-ingredients.png");
+@mixin ingredientRecipeSprite($xOffset, $yOffset) {
+  background-image: url("/sprites/ingredients/ingredients-recipies.png");
   background-position-x: (($xOffset + 1) * $food-ingredient-x-offset) - xOffset($xOffset);
   background-position-y: (($yOffset + 1) * $food-ingredient-y-offset) - xOffset($yOffset);
+}
+
+@mixin itemSprite($xOffset) {
+  background-image: url("/sprites/ingredients/items.png");
+  background-position-x: (($xOffset + 1) * $food-ingredient-x-offset) - xOffset($xOffset);
+  //background-position-y: (($yOffset + 1) * $food-ingredient-y-offset) - xOffset($yOffset);
+}
+
+@mixin subYOffset($yOffset, $subYOffset) {
+  background-position-y: (-15 * $yOffset + $subYOffset) - ($yOffset * $icon-height);
 }
 
 .icon-item {
@@ -28,252 +38,435 @@ $food-ingredient-y-offset: -15px;
   // Fruit
   // ---------------------------------------------------------------------------
   &.apple {
-	@include foodSprite(0, 0);
+	@include ingredientRecipeSprite(0, 0);
   }
 
   &.wildberry {
-	@include foodSprite(1, 0);
+	@include ingredientRecipeSprite(1, 0);
   }
 
   &.voltfruit {
-	@include foodSprite(2, 0);
+	@include ingredientRecipeSprite(2, 0);
   }
 
   &.hearty-durian {
-	@include foodSprite(3, 0);
+	@include ingredientRecipeSprite(3, 0);
   }
 
   &.hearty-durian {
-	@include foodSprite(3, 0);
+	@include ingredientRecipeSprite(3, 0);
   }
 
   &.fleet-lotus-seeds {
-	@include foodSprite(4, 0);
+	@include ingredientRecipeSprite(4, 0);
   }
 
   &.hydromelon {
-	@include foodSprite(5, 0);
+	@include ingredientRecipeSprite(5, 0);
   }
 
   &.palm-fruit {
-	@include foodSprite(6, 0);
+	@include ingredientRecipeSprite(6, 0);
   }
 
   &.mighty-bananas {
-	@include foodSprite(7, 0);
+	@include ingredientRecipeSprite(7, 0);
   }
 
   &.spicy-pepper {
-	@include foodSprite(8, 0);
+	@include ingredientRecipeSprite(8, 0);
   }
 
   &.fortified-pumpkin {
-	@include foodSprite(9, 0);
+	@include ingredientRecipeSprite(9, 0);
   }
 
   &.acorn {
-	@include foodSprite(10, 0);
+	@include ingredientRecipeSprite(10, 0);
   }
 
   &.chickaloo-tree-nut {
-	@include foodSprite(11, 0);
+	@include ingredientRecipeSprite(11, 0);
   }
 
   // ---------------------------------------------------------------------------
   // Meat
   // ---------------------------------------------------------------------------
   &.raw-meat {
-	@include foodSprite(0, 2);
+	@include ingredientRecipeSprite(0, 2);
   }
 
   &.raw-prime-meat {
-	@include foodSprite(1, 2);
+	@include ingredientRecipeSprite(1, 2);
   }
 
   &.raw-gourmet-meat {
-	@include foodSprite(2, 2);
+	@include ingredientRecipeSprite(2, 2);
   }
 
   &.raw-bird-drumstick {
-	@include foodSprite(3, 2);
+	@include ingredientRecipeSprite(3, 2);
   }
 
   &.raw-bird-thigh {
-	@include foodSprite(4, 2);
+	@include ingredientRecipeSprite(4, 2);
   }
 
   &.raw-whole-bird {
-	@include foodSprite(5, 2);
+	@include ingredientRecipeSprite(5, 2);
   }
 
   &.bird-egg {
-	@include foodSprite(6, 2);
+	@include ingredientRecipeSprite(6, 2);
   }
 
   // ---------------------------------------------------------------------------
   // Mushrooms
   // ---------------------------------------------------------------------------
   &.stamella-shroom {
-	@include foodSprite(0, 5);
+	@include ingredientRecipeSprite(0, 5);
   }
 
   &.chillshroom {
-	@include foodSprite(1, 5);
+	@include ingredientRecipeSprite(1, 5);
   }
 
   &.sunshroom {
-	@include foodSprite(2, 5);
+	@include ingredientRecipeSprite(2, 5);
   }
 
   &.zapshroom {
-	@include foodSprite(3, 5);
+	@include ingredientRecipeSprite(3, 5);
   }
 
   &.rushroom {
-	@include foodSprite(4, 5);
+	@include ingredientRecipeSprite(4, 5);
   }
 
   &.hylian-shroom {
-	@include foodSprite(4, 5);
+	@include ingredientRecipeSprite(4, 5);
   }
 
   &.hylian-shroom {
-	@include foodSprite(5, 5);
+	@include ingredientRecipeSprite(5, 5);
   }
 
   &.hearty-truffle {
-	@include foodSprite(6, 5);
+	@include ingredientRecipeSprite(6, 5);
   }
 
   &.silent-shroom {
-	@include foodSprite(7, 5);
+	@include ingredientRecipeSprite(7, 5);
   }
 
   &.razorshroom {
-	@include foodSprite(8, 5);
+	@include ingredientRecipeSprite(8, 5);
   }
 
   &.ironshroom {
-	@include foodSprite(9, 5);
+	@include ingredientRecipeSprite(9, 5);
   }
 
   &.big-hearty-truffle {
-	@include foodSprite(10, 5);
+	@include ingredientRecipeSprite(10, 5);
   }
 
   &.endura-shroom {
-	@include foodSprite(11, 5);
+	@include ingredientRecipeSprite(11, 5);
   }
 
   // ---------------------------------------------------------------------------
   // Veggies
   // ---------------------------------------------------------------------------
   &.hearty-radish {
-	@include foodSprite(0, 7);
+	@include ingredientRecipeSprite(0, 7);
   }
 
   &.big-hearty-radish {
-	@include foodSprite(1, 7);
+	@include ingredientRecipeSprite(1, 7);
   }
 
   &.mighty-thistle {
-	@include foodSprite(2, 7);
+	@include ingredientRecipeSprite(2, 7);
   }
 
   &.armoranth {
-	@include foodSprite(3, 7);
+	@include ingredientRecipeSprite(3, 7);
   }
 
   &.swift-carrot {
-	@include foodSprite(4, 7);
+	@include ingredientRecipeSprite(4, 7);
   }
 
   &.endura-carrot {
-	@include foodSprite(5, 7);
+	@include ingredientRecipeSprite(5, 7);
   }
 
   // ---------------------------------------------------------------------------
   // Fish
   // ---------------------------------------------------------------------------
   &.hyrule-bass {
-	@include foodSprite(0, 9);
+	@include ingredientRecipeSprite(0, 9);
   }
 
   &.hearty-bass {
-	@include foodSprite(1, 9);
+	@include ingredientRecipeSprite(1, 9);
   }
 
   &.staminoka-bass {
-	@include foodSprite(2, 9);
+	@include ingredientRecipeSprite(2, 9);
   }
 
   &.chillfin-trout {
-	@include foodSprite(3, 9);
+	@include ingredientRecipeSprite(3, 9);
   }
 
   &.voltfin-trout {
-	@include foodSprite(4, 9);
+	@include ingredientRecipeSprite(4, 9);
   }
 
   &.sizzlefin-trout {
-	@include foodSprite(5, 9);
+	@include ingredientRecipeSprite(5, 9);
   }
 
   &.stealthfin-trout {
-	@include foodSprite(6, 9);
+	@include ingredientRecipeSprite(6, 9);
   }
 
   &.hearty-salmon {
-	@include foodSprite(7, 9);
+	@include ingredientRecipeSprite(7, 9);
   }
 
   &.mighty-carp {
-	@include foodSprite(8, 9);
+	@include ingredientRecipeSprite(8, 9);
   }
 
   &.armored-carp {
-	@include foodSprite(9, 9);
+	@include ingredientRecipeSprite(9, 9);
   }
 
   &.sanke-carp {
-	@include foodSprite(10, 9);
+	@include ingredientRecipeSprite(10, 9);
   }
 
   &.mighty-porgy {
-	@include foodSprite(11, 9);
+	@include ingredientRecipeSprite(11, 9);
   }
 
   &.armored-porgy {
-	@include foodSprite(12, 9);
+	@include ingredientRecipeSprite(12, 9);
   }
 
   &.hearty-blueshell-snail {
-	@include foodSprite(0, 10);
-	background-position-y: (-15 * 10) - (10 * $icon-height);
+	@include ingredientRecipeSprite(0, 10);
+	@include subYOffset(10, 0);
   }
 
   &.sneaky-river-snail {
-	@include foodSprite(1, 10);
-	background-position-y: (-15 * 10) - (10 * $icon-height);
+	@include ingredientRecipeSprite(1, 10);
+	@include subYOffset(10, 0);
   }
 
   &.razorclaw-crab {
-	@include foodSprite(5, 10);
-	background-position-y: (-15 * 10) - (10 * $icon-height);
+	@include ingredientRecipeSprite(5, 10);
+	@include subYOffset(10, 0);
   }
 
   &.ironshell-crab {
-	@include foodSprite(6, 10);
-	background-position-y: (-15 * 10) - (10 * $icon-height);
+	@include ingredientRecipeSprite(6, 10);
+	@include subYOffset(10, 0);
   }
 
   &.bright-eyed-crab {
-	@include foodSprite(7, 10);
-	background-position-y: (-15 * 10) - (10 * $icon-height);
+	@include ingredientRecipeSprite(7, 10);
+	@include subYOffset(10, 0);
   }
-}
 
-.monster {
-  background-image: url("/sprites/ingredients/monster-parts.png");
-  background-position: 0 0;
+  // ---------------------------------------------------------------------------
+  // Reptile
+  // ---------------------------------------------------------------------------
+  &.winterwing-butterfly,
+  &.summerwing-butterfly,
+  &.thunderwing-butterfly,
+  &.smotherwing-butterfly,
+  &.cold-darner,
+  &.electric-darner,
+  &.warm-darner,
+  &.rugged-rhino-beetle,
+  &.bladed-rhino-beetle,
+  &.energetic-rhino-beetle,
+  &.sunset-firefly,
+  &.fairy,
+  &.restless-cricket,
+  &.hot-footed-frog,
+  &.tireless-frog {
+	background-position-y: -861px;
+  }
+
+  &.winterwing-butterfly {
+	@include itemSprite(0);
+  }
+
+  &.summerwing-butterfly {
+	@include itemSprite(1);
+  }
+
+  &.thunderwing-butterfly {
+	@include itemSprite(2);
+  }
+
+  &.smotherwing-butterfly {
+	@include itemSprite(3);
+  }
+
+  &.cold-darner {
+	@include itemSprite(4);
+  }
+
+  &.electric-darner {
+	@include itemSprite(5);
+  }
+
+  &.warm-darner {
+	@include itemSprite(6);
+  }
+
+  &.rugged-rhino-beetle {
+	@include itemSprite(7);
+  }
+
+  &.bladed-rhino-beetle {
+	@include itemSprite(8);
+  }
+
+  &.energetic-rhino-beetle {
+	@include itemSprite(9);
+  }
+
+  &.sunset-firefly {
+	@include itemSprite(10);
+  }
+
+  &.fairy {
+	@include itemSprite(11);
+  }
+
+  &.restless-cricket {
+	@include itemSprite(12);
+  }
+
+  &.hot-footed-frog {
+	@include itemSprite(13);
+  }
+
+  &.tireless-frog {
+	@include itemSprite(14);
+  }
+
+  &.hearty-lizard,
+  &.hightail-lizard,
+  &.fireproof-lizard {
+	background-position-y: -861px - $icon-height - 1;
+  }
+
+  &.hearty-lizard {
+	@include itemSprite(0);
+  }
+
+  &.hightail-lizard {
+	@include itemSprite(1);
+  }
+
+  &.fireproof-lizard {
+	@include itemSprite(2);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Plants
+  // ---------------------------------------------------------------------------
+  &.hyrule-herb,
+  &.cool-safflina,
+  &.warm-safflina,
+  &.blue-nightshade,
+  &.silent-princess,
+  &.electric-safflina,
+  &.swift-violet {
+	background-position-y: -1180px;
+  }
+
+  &.hyrule-herb {
+	@include itemSprite(0);
+  }
+
+  &.cool-safflina {
+	@include itemSprite(1);
+  }
+
+  &.warm-safflina {
+	@include itemSprite(2);
+  }
+
+  &.blue-nightshade {
+	@include itemSprite(3);
+  }
+
+  &.silent-princess {
+	@include itemSprite(4);
+  }
+
+  &.electric-safflina {
+	@include itemSprite(5);
+  }
+
+  &.swift-violet {
+	@include itemSprite(6);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Materials
+  // ---------------------------------------------------------------------------
+  &.courser-bee-honey {
+	background-position-y: -1499px;
+	@include itemSprite(8);
+  }
+
+  &.cane-sugar,
+  &.hylian-rice,
+  &.tabantha-wheat,
+  &.goat-butter,
+  &.fresh-milk,
+  &.goron-spice,
+  &.monster-extract {
+	background-position-y: -1596px;
+  }
+
+  &.cane-sugar {
+	@include itemSprite(4);
+  }
+
+  &.hylian-rice {
+	@include itemSprite(5);
+  }
+
+  &.tabantha-wheat {
+	@include itemSprite(6);
+  }
+
+  &.goat-butter {
+	@include itemSprite(7);
+  }
+
+  &.fresh-milk {
+	@include itemSprite(8);
+  }
+
+  &.goron-spice {
+	@include itemSprite(9);
+  }
+
+  &.monster-extract {
+	@include itemSprite(10);
+  }
+
+
 }
