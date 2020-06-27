@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import "../sass/InventoryManagement.scss"
-import {allIngredientsLookupTable, CategoryType, categoryTypeLookupTable} from "../../item/Ingredient";
+import {CategoryType, categoryTypeLookupTable} from "../../item/Ingredient";
 import ClickableIngredient from "../../item/components/ClickableItem";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
@@ -9,8 +9,9 @@ import ItemStack from "../../item/ItemStack";
 import InventoryTally from "./InventoryTally";
 import Ingredient from "../../item/Ingredient"
 import Item from "../../item/Item";
+import {allIngredients} from "../../item/data/ingredients"
 
-const availableIngredients: ItemStack<Ingredient>[] = allIngredientsLookupTable.map(i => new ItemStack(i, 0));
+const availableIngredients: ItemStack<Ingredient>[] = allIngredients.map(i => new ItemStack(i, 0));
 const inventoryTabs: CategoryType[] = Object.values<CategoryType>(categoryTypeLookupTable);
 
 interface InventoryViewProps {
