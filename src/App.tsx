@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import './App.scss';
-import InventoryManagement from "./inventory/InventoryManagement";
+import InventoryManagement from "./inventory/components/InventoryManagement";
 import Inventory from "./inventory/Inventory";
-import RecipeLocator from "./recipe/RecipeLocator";
+import RecipeLocator from "./recipe-search/components/RecipeLocator";
 
 const defaultInventory = new Inventory();
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./InventorySearch.scss"
+import "../sass/InventorySearch.scss"
 
 interface InventorySearchProps {
 	placeholder?: string,

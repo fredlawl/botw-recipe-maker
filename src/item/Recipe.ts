@@ -1,8 +1,8 @@
-import ItemStack from "../item/ItemStack";
+import ItemStack from "./ItemStack";
 import Entity from "../Entity";
-import Item, {ImmunityBuffType, ItemType} from "../item/Item";
-import Ingredient from "../inventory/Ingredient";
-import Effect from "../item/Effect";
+import Item, {ImmunityBuffType, ItemType} from "./Item";
+import Ingredient from "./Ingredient";
+import Effect from "./Effect";
 
 class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
@@ -52,7 +52,7 @@ class Recipe extends Entity<Recipe> implements Item {
 		let numberOfMatchedIngredients = 0;
 
 		/*
-		 * Technically if a recipe can be pulled from thin air with no
+		 * Technically if a recipe-search can be pulled from thin air with no
 		 * ingredients, then it's craftable.
 		 */
 		if (this.ingredients.length === 0) {

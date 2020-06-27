@@ -1,6 +1,6 @@
 import Entity from "../Entity";
-import Item, {ImmunityBuffType, ItemType} from "../item/Item";
-import Effect from "../item/Effect";
+import Item, {ImmunityBuffType, ItemType} from "./Item";
+import Effect from "./Effect";
 
 enum CategoryType {
 	FRUIT = 'fruit',

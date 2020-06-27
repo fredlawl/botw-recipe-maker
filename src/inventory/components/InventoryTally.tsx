@@ -1,8 +1,8 @@
 import React from "react";
-import "./InventoryTally.scss";
-import Inventory from "./Inventory";
-import ItemStack from "../item/ItemStack";
-import Item from "../item/Item";
+import "../sass/InventoryTally.scss";
+import Inventory from "../Inventory";
+import ItemStack from "../../item/ItemStack";
+import Item from "../../item/Item";
 
 interface InventoryTallyProps {
 	inventory: Inventory

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import "./ClickableItem.scss";
-import "./ItemIcon.scss";
-import ItemStack from "./ItemStack";
-import Item from "./Item";
-import {getItemIconClass} from "./utility";
+import "../sass/ClickableItem.scss";
+import "../sass/ItemIcon.scss";
+import ItemStack from "../ItemStack";
+import Item from "../Item";
+import {getItemIconClass} from "../utility";
 
 interface props {
 	item: Item,

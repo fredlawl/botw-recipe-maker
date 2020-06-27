@@ -1,6 +1,6 @@
 import React from "react";
-import "./RecipeLocator.scss";
-import Inventory from "../inventory/Inventory";
+import "../sass/RecipeLocator.scss";
+import Inventory from "../../inventory/Inventory";
 
 interface RecipeLocatorProps {
 	inventory: Inventory

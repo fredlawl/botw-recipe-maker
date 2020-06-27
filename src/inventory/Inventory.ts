@@ -1,5 +1,5 @@
 import ItemStack from "../item/ItemStack";
-import Ingredient from "./Ingredient";
+import Ingredient from "../item/Ingredient";
 
 class Inventory {
 	private _totalCount: number;

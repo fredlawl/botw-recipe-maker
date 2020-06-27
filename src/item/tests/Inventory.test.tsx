@@ -1,9 +1,9 @@
 import React from 'react';
-import Inventory from "./Inventory";
-import ItemStack from "../item/ItemStack";
-import Ingredient, {CategoryType} from "./Ingredient"
-import {ImmunityBuffType} from "../item/Item";
-import Effect from '../item/Effect';
+import Inventory from "../../inventory/Inventory";
+import ItemStack from "../ItemStack";
+import Ingredient, {CategoryType} from "../Ingredient"
+import {ImmunityBuffType} from "../Item";
+import Effect from '../Effect';
 
 describe("Inventory.addInventoryItem()", () => {
 	test("add inventory item works with 1 item", () => {
