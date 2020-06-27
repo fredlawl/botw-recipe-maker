@@ -10,16 +10,6 @@ export enum ImmunityBuffType {
 	ELECTRIC,
 }
 
-export enum EffectType {
-	NONE,
-	HEALTH,
-	ATTACK,
-	STAMINA,
-	SPEED,
-	DEFENSE,
-	STEALTH
-}
-
 export default interface Item {
 	id: string,
 	name: string,
@@ -35,14 +25,4 @@ const immunityBuffTypeLookupTable: any = {
 	[ImmunityBuffType.ELECTRIC]: ImmunityBuffType.ELECTRIC,
 };
 
-const effectTypeLookupTable: any = {
-	[EffectType.NONE]: EffectType.NONE,
-	[EffectType.HEALTH]: EffectType.HEALTH,
-	[EffectType.STAMINA]: EffectType.STAMINA,
-	[EffectType.ATTACK]: EffectType.ATTACK,
-	[EffectType.SPEED]: EffectType.SPEED,
-	[EffectType.DEFENSE]: EffectType.DEFENSE,
-	[EffectType.STEALTH]: EffectType.STEALTH,
-};
-
-export { immunityBuffTypeLookupTable, effectTypeLookupTable };
+export { immunityBuffTypeLookupTable };
