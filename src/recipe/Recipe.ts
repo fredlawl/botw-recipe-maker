@@ -1,29 +1,34 @@
 import ItemStack from "../item/ItemStack";
 import Entity from "../Entity";
-import Item, {ItemType} from "../item/Item";
+import Item, {EffectType, ItemType, StatsType} from "../item/Item";
 
 class Recipe extends Entity<Recipe> implements Item {
 	public readonly name: string;
 	public readonly ingredients: ItemStack[];
+
+	private _effect: EffectType;
+	private _stats: StatsType;
 	private _crafted: boolean;
 
 	public static clone(prevRecipe: Recipe): Recipe {
-		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients);
+		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients, prevRecipe._effect, prevRecipe._stats);
 		newRecipe._id = prevRecipe._id;
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: ItemStack[]): Recipe {
-		const recipe = new Recipe(name, ingredients);
+	public static createCrafted(name: string, ingredients: ItemStack[], effect?: EffectType, stats?: StatsType): Recipe {
+		const recipe = new Recipe(name, ingredients, effect, stats);
 		recipe._crafted = true;
 		return recipe;
 	}
 
-	constructor(name: string, ingredients: ItemStack[]) {
+	constructor(name: string, ingredients: ItemStack[], effect?: EffectType, stats?: StatsType) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
 		this._crafted = false;
+		this._effect = (effect === undefined) ? EffectType.NONE : effect;
+		this._stats = (stats === undefined) ? StatsType.NONE : stats;
 	}
 
 	public craft(inventory: ItemStack[]): Recipe {
@@ -69,6 +74,14 @@ class Recipe extends Entity<Recipe> implements Item {
 
 	get type(): ItemType {
 		return ItemType.CONSUMABLE;
+	}
+
+	get effect(): EffectType {
+		return this._effect;
+	}
+
+	get stats(): StatsType {
+		return this._stats;
 	}
 }
 

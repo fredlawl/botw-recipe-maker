@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import "./InventoryManagement.scss"
-import {allIngredientsLookupTable, IngredientClass, ingredientClassLookupTable} from "./Ingredient";
+import {allIngredientsLookupTable, CategoryType, categoryTypeLookupTable} from "./Ingredient";
 import ClickableIngredient from "../item/ClickableItem";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
@@ -9,9 +9,9 @@ import ItemStack from "../item/ItemStack";
 import InventoryTally from "./InventoryTally";
 
 const availableIngredients: ItemStack[] = allIngredientsLookupTable.map(i => new ItemStack(i, 0));
-const inventoryTabs: IngredientClass[] = Object.values<IngredientClass>(ingredientClassLookupTable);
-const ingredientToIngredientClassLookupTable = new Map<string, IngredientClass>(
-	allIngredientsLookupTable.map(i => [i.id, i.classification])
+const inventoryTabs: CategoryType[] = Object.values<CategoryType>(categoryTypeLookupTable);
+const ingredientToIngredientClassLookupTable = new Map<string, CategoryType>(
+	allIngredientsLookupTable.map(i => [i.id, i.category])
 );
 
 interface InventoryViewProps {
@@ -22,7 +22,7 @@ interface InventoryViewProps {
 const InventoryManagement = (props: InventoryViewProps) => {
 	const [cacheId, setCacheId] = useState(0);
 	const [inventory, setInventory] = useState(props.inventory);
-	const [selectedTab, setSelectedTab] = useState<IngredientClass | undefined>(IngredientClass.FRUIT);
+	const [selectedTab, setSelectedTab] = useState<CategoryType | undefined>(CategoryType.FRUIT);
 	const [searchQuery, setSearchQuery] = useState('');
 	const searchElement = useRef<HTMLInputElement>(null);
 
@@ -56,7 +56,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		inventoryUpdated();
 	};
 
-	const changeTab = (inventoryClass: IngredientClass): void => {
+	const changeTab = (inventoryClass: CategoryType): void => {
 		setSearchQuery("");
 		// @ts-ignore
 		searchElement.current.value = '';
@@ -66,21 +66,21 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	const onClearAll = (): void => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
-		changeTab(IngredientClass.FRUIT);
+		changeTab(CategoryType.FRUIT);
 		inventoryUpdated();
 	}
 
 	const onSelectTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.preventDefault();
 		const selectedTab = (event.target as HTMLButtonElement).dataset.target as string;
-		changeTab(ingredientClassLookupTable[selectedTab]);
+		changeTab(categoryTypeLookupTable[selectedTab]);
 	};
 
 	const onSearch = (searchQuery: string): void => {
 		const query = searchQuery.toLowerCase();
 
 		if (query.length === 0) {
-			changeTab(IngredientClass.FRUIT);
+			changeTab(CategoryType.FRUIT);
 			return;
 		}
 
