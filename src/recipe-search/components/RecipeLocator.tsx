@@ -1,12 +1,15 @@
 import React from "react";
 import "../sass/RecipeLocator.scss";
 import Inventory from "../../inventory/Inventory";
+import {allRecipes} from "../../item/data/recipes";
 
 interface RecipeLocatorProps {
 	inventory: Inventory
 }
 
 const RecipeLocator = (props: RecipeLocatorProps) => {
+	const matchedRecipes = allRecipes.filter(r => r.isCraftable(props.inventory.items));
+
 	return (
 		<div className={"recipe-locator"}>
 			<div className={"container"}>
@@ -102,6 +105,13 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 						<span>Sort By:</span>
 						<button title={"Sort by Hearts DESC"}>Hearts (ASC)</button>
 						<button title={"Sort by Duration ASC"}>Duration (DESC)</button>
+					</div>
+					<div>
+						{matchedRecipes.length > 0 &&
+							<ul>
+								{matchedRecipes.map(r => <li key={r.id}>{r.name}</li>)}
+							</ul>
+						}
 					</div>
 				</section>
 			</div>

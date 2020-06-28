@@ -1,30 +1,27 @@
-import Effect from "./Effect";
+import Entity from "../Entity";
+import ItemCategory from "./ItemCategory";
 
-export enum ItemType {
-	MATERIAL = 1,
-	CONSUMABLE
-}
-
-export enum ImmunityBuffType {
-	NONE,
-	FREEZE,
-	FIRE,
-	ELECTRIC,
-}
-
-export default interface Item {
+export interface Item {
 	id: string,
-	name: string,
-	type: ItemType,
-	immunity: ImmunityBuffType,
-	effect: Effect
+	name: string;
+	categories: ItemCategory[],
+	identifiers: string[]
 }
 
-const immunityBuffTypeLookupTable: any = {
-	[ImmunityBuffType.NONE]: ImmunityBuffType.NONE,
-	[ImmunityBuffType.FREEZE]: ImmunityBuffType.FREEZE,
-	[ImmunityBuffType.FIRE]: ImmunityBuffType.FIRE,
-	[ImmunityBuffType.ELECTRIC]: ImmunityBuffType.ELECTRIC,
-};
+export abstract class BaseItem<T> extends Entity<T> implements Item {
+	public readonly name: string;
+	public readonly categories: ItemCategory[];
 
-export { immunityBuffTypeLookupTable };
+	private _categoryIdentifiers: string[];
+
+	protected constructor(name: string, categories: ItemCategory[]) {
+		super(name);
+		this.name = name;
+		this.categories = categories;
+		this._categoryIdentifiers = categories.map(c => c.id);
+	}
+
+	get identifiers(): string[] {
+		return [this.id, ...this._categoryIdentifiers];
+	}
+}

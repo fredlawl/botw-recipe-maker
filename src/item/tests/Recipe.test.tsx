@@ -1,107 +1,70 @@
 import React from 'react';
 import ItemStack from "../ItemStack";
-import Ingredient, {CategoryType} from '../Ingredient';
 import Recipe from "../Recipe";
-import {ImmunityBuffType} from "../Item";
-import Effect from '../Effect';
-
-describe("Recipe.craft()", () => {
-	test("given already crafted recipe-search, it remains crafted", () => {
-		const craftedRecipe = Recipe.createCrafted("crafted", []);
-		expect(craftedRecipe.craft([]).crafted).toBe(true);
-	});
-
-	test("given sufficient inventory, recipe-search is crafted", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 20),
-		];
-
-		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
-		]);
-
-		expect(strawBerryBananaPopsicle.craft(inventory).crafted).toBe(true);
-	});
-
-	test("given insufficient inventory the recipe-search is not crafted", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 20),
-		];
-
-		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-		]);
-
-		expect(strawBerryBananaPopsicle.craft(inventory).crafted).toBe(false);
-	});
-});
+import {ImmunityBuffType} from "../ImmunityBuff";
+import {primaryCategories, PrimaryCategory} from "../data/itemCategories";
+import {Item} from "../Item";
+import Material from "../Material";
 
 describe("Recipe.isCraftable()", () => {
 	test("given sufficient inventory the recipe-search is not craftable", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 20),
+		const inventory: ItemStack<Item>[] = [
+			new ItemStack(new Material("Apple", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 10),
+			new ItemStack(new Material("Banana", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 1),
+			new ItemStack(new Material("Strawberry", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 20),
 		];
 
 		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
+			"strawberry",
+			"banana",
 		]);
 
 		expect(strawBerryBananaPopsicle.isCraftable(inventory)).toBe(true);
 	});
 
-	test("given insufficient inventory the recipe-search is not craftable", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 20),
+	test("given inventory with similar categories the recipe is craftabble", () => {
+		const inventory: ItemStack<Item>[] = [
+			new ItemStack(new Material("Apple", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 10),
+			new ItemStack(new Material("Banana", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 1),
+			new ItemStack(new Material("Strawberry", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 20),
 		];
 
 		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
+			"fruit"
 		]);
 
-		expect(strawBerryBananaPopsicle.isCraftable(inventory)).toBe(false);
+		expect(strawBerryBananaPopsicle.isCraftable(inventory)).toBe(true);
 	});
 
-	test("given missing inventory the recipe-search is not craftable", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
+	test("given missing inventory the recipe is not craftable", () => {
+		const inventory: ItemStack<Item>[] = [
+			new ItemStack(new Material("Apple", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 10),
+			new ItemStack(new Material("Banana", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 1),
 		];
 
 		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
+			"strawberry",
+			"banana",
 		]);
 
 		expect(strawBerryBananaPopsicle.isCraftable(inventory)).toBe(false);
 	});
 
-	test("given no inventory the recipe-search is not craftable", () => {
-		const inventory: ItemStack<Ingredient>[] = [];
+	test("given no inventory the recipe is not craftable", () => {
+		const inventory: ItemStack<Item>[] = [];
 
 		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", [
-			new ItemStack(new Ingredient("Strawberry", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 3),
+			"strawberry",
+			"banana",
 		]);
 
 		expect(strawBerryBananaPopsicle.isCraftable(inventory)).toBe(false);
 	});
 
-	test("given no ingredients the recipe-search is craftable", () => {
-		const inventory: ItemStack<Ingredient>[] = [
-			new ItemStack(new Ingredient("Apple", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 10),
-			new ItemStack(new Ingredient("Banana", CategoryType.FRUIT, ImmunityBuffType.NONE, Effect.none()), 1),
+	test("given a recipe with no ingredient requirements recipe is craftable", () => {
+		const inventory: ItemStack<Item>[] = [
+			new ItemStack(new Material("Apple", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 10),
+			new ItemStack(new Material("Banana", [ primaryCategories[PrimaryCategory.FRUIT] ], [], ImmunityBuffType.NONE), 1),
 		];
 
 		const strawBerryBananaPopsicle = new Recipe("Strawberry Banana Popsicle", []);

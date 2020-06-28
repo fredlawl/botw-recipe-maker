@@ -1,4 +1,4 @@
-import Item from "./Item";
+import {Item} from "./Item";
 
 class ItemStack<T extends Item> {
 	public static readonly STACK_MIN: number = 0;

@@ -1,54 +1,24 @@
 import ItemStack from "./ItemStack";
 import Entity from "../Entity";
-import Item, {ImmunityBuffType, ItemType} from "./Item";
-import Ingredient from "./Ingredient";
-import Effect from "./Effect";
+import {Item} from "./Item";
 
-class Recipe extends Entity<Recipe> implements Item {
+class Recipe extends Entity<Recipe> {
 	public readonly name: string;
-	public readonly ingredients: ItemStack<Ingredient>[];
-
-	private _immunity: ImmunityBuffType;
-	private _effect: Effect;
-	private _crafted: boolean;
+	public readonly ingredients: string[];
 
 	public static clone(prevRecipe: Recipe): Recipe {
-		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients, prevRecipe._immunity, prevRecipe._effect);
+		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.ingredients);
 		newRecipe._id = prevRecipe._id;
 		return newRecipe;
 	}
 
-	public static createCrafted(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: Effect): Recipe {
-		const recipe = new Recipe(name, ingredients, immunity, effect);
-		recipe._crafted = true;
-		return recipe;
-	}
-
-	constructor(name: string, ingredients: ItemStack<Ingredient>[], immunity?: ImmunityBuffType, effect?: Effect) {
+	constructor(name: string, ingredients: string[]) {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
-		this._crafted = false;
-		this._immunity = (immunity === undefined) ? ImmunityBuffType.NONE : immunity;
-		this._effect = (effect === undefined) ? Effect.none() : effect;
 	}
 
-	public craft(inventory: ItemStack<Ingredient>[]): Recipe {
-		const cloned = Recipe.clone(this);
-
-		if (cloned.crafted || !this.isCraftable(inventory)) {
-			return cloned;
-		}
-
-		cloned._crafted = true;
-		return cloned;
-	}
-
-	get crafted(): boolean {
-		return this._crafted;
-	}
-
-	public isCraftable(ingredients: ItemStack<Ingredient>[]): boolean {
+	public isCraftable(inventoryIngredients: ItemStack<Item>[]): boolean {
 		let numberOfMatchedIngredients = 0;
 
 		/*
@@ -60,30 +30,30 @@ class Recipe extends Entity<Recipe> implements Item {
 		}
 
 		const mappedRecipeIngredients = new Map<string, number>(
-			this.ingredients.map(i => [i.item.id, i.stack]));
+			this.ingredients.map(i => [i, 1]));
 
-		for (const ingredient of ingredients) {
-			const recipeIngredientAmount = mappedRecipeIngredients.get(ingredient.item.id);
+		let mappedInventoryIngredientsSet: any = {};
+		let mappedInventoryIngredients: string[] = [];
+		for (const ingredient of inventoryIngredients) {
+			mappedInventoryIngredients = [...mappedInventoryIngredients, ...ingredient.item.identifiers];
+		}
+
+		for (const ig of mappedInventoryIngredients) {
+			mappedInventoryIngredientsSet[ig] = {};
+		}
+
+		mappedInventoryIngredients = Object.keys(mappedInventoryIngredientsSet);
+
+		for (const identifier of mappedInventoryIngredients) {
+			const recipeIngredientAmount = mappedRecipeIngredients.get(identifier);
 			if (recipeIngredientAmount === undefined) {
 				continue;
 			}
 
-			numberOfMatchedIngredients += Number((recipeIngredientAmount - ingredient.stack) <= 0);
+			numberOfMatchedIngredients++;
 		}
 
 		return numberOfMatchedIngredients === mappedRecipeIngredients.size;
-	}
-
-	get type(): ItemType {
-		return ItemType.CONSUMABLE;
-	}
-
-	get immunity(): ImmunityBuffType {
-		return this._immunity;
-	}
-
-	get effect(): Effect {
-		return this._effect;
 	}
 }
 

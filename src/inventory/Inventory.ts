@@ -1,23 +1,23 @@
 import ItemStack from "../item/ItemStack";
-import Ingredient from "../item/Ingredient";
+import {Item} from "../item/Item";
 
 class Inventory {
 	private _totalCount: number;
-	private _items: Map<string, ItemStack<Ingredient>>;
+	private _items: Map<string, ItemStack<Item>>;
 
 	public static clone(prevInventory: Inventory): Inventory {
 		const newInventory = new Inventory();
 		newInventory._totalCount = prevInventory.totalCount;
-		newInventory._items = new Map<string, ItemStack<Ingredient>>(prevInventory._items);
+		newInventory._items = new Map<string, ItemStack<Item>>(prevInventory._items);
 		return newInventory;
 	}
 
 	public constructor() {
 		this._totalCount = 0;
-		this._items = new Map<string, ItemStack<Ingredient>>();
+		this._items = new Map<string, ItemStack<Item>>();
 	}
 
-	public addInventoryItem(item: ItemStack<Ingredient>): boolean {
+	public addInventoryItem(item: ItemStack<Item>): boolean {
 		this.remove(item);
 
 		// Don't add item if there's no stack
@@ -34,18 +34,18 @@ class Inventory {
 		return this._totalCount;
 	}
 
-	get items(): ItemStack<Ingredient>[] {
+	get items(): ItemStack<Item>[] {
 		return Array.from(this._items.values());
 	}
 
-	public clear(): ItemStack<Ingredient>[] {
+	public clear(): ItemStack<Item>[] {
 		let currentInventory = this.items;
-		this._items = new Map<string, ItemStack<Ingredient>>();
+		this._items = new Map<string, ItemStack<Item>>();
 		this._totalCount = 0;
 		return currentInventory;
 	}
 
-	public remove(item: ItemStack<Ingredient>) {
+	public remove(item: ItemStack<Item>) {
 		const foundItem = this.item(item);
 		if (foundItem) {
 			this._totalCount -= foundItem.stack;
@@ -53,7 +53,7 @@ class Inventory {
 		}
 	}
 
-	public item(item: ItemStack<Ingredient>): ItemStack<Ingredient> | undefined {
+	public item(item: ItemStack<Item>): ItemStack<Item> | undefined {
 		return this._items.get(item.item.id);
 	}
 }

@@ -1,18 +1,19 @@
 import React, {useEffect, useRef, useState} from "react";
 import "../sass/InventoryManagement.scss"
-import {CategoryType, categoryTypeLookupTable} from "../../item/Ingredient";
 import ClickableIngredient from "../../item/components/ClickableItem";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
 import Inventory from "../Inventory";
 import ItemStack from "../../item/ItemStack";
 import InventoryTally from "./InventoryTally";
-import Ingredient from "../../item/Ingredient"
-import Item from "../../item/Item";
-import {allIngredients} from "../../item/data/ingredients"
+import {Item} from "../../item/Item";
+import {allIngredients} from "../../item/data/materials"
+import {primaryCategories, PrimaryCategory} from "../../item/data/itemCategories";
+import Material from "../../item/Material";
+import ItemCategory from "../../item/ItemCategory";
 
-const availableIngredients: ItemStack<Ingredient>[] = allIngredients.map(i => new ItemStack(i, 0));
-const inventoryTabs: CategoryType[] = Object.values<CategoryType>(categoryTypeLookupTable);
+const availableIngredients: ItemStack<Material>[] = allIngredients.map(i => new ItemStack(i, 0));
+const inventoryTabs: string[] = Object.keys(primaryCategories);
 
 interface InventoryViewProps {
 	inventory: Inventory,
@@ -22,7 +23,7 @@ interface InventoryViewProps {
 const InventoryManagement = (props: InventoryViewProps) => {
 	const [cacheId, setCacheId] = useState(0);
 	const [inventory, setInventory] = useState(props.inventory);
-	const [selectedTab, setSelectedTab] = useState<CategoryType | undefined>(CategoryType.FRUIT);
+	const [selectedTab, setSelectedTab] = useState<ItemCategory>(primaryCategories[PrimaryCategory.FRUIT]);
 	const [searchQuery, setSearchQuery] = useState('');
 	const searchElement = useRef<HTMLInputElement>(null);
 
@@ -52,41 +53,39 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	}, [searchElement]);
 
 	const onIngredientUpdate = (prevStack: ItemStack<Item>, curStack: ItemStack<Item>): void => {
-		inventory.addInventoryItem(curStack as ItemStack<Ingredient>);
+		inventory.addInventoryItem(curStack as ItemStack<Material>);
 		inventoryUpdated();
 	};
 
-	const changeTab = (inventoryClass: CategoryType): void => {
+	const changeTab = (category: ItemCategory): void => {
 		setSearchQuery("");
 		// @ts-ignore
 		searchElement.current.value = '';
-		setSelectedTab(inventoryClass);
+		setSelectedTab(category);
 	};
 
 	const onClearAll = (): void => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
-		changeTab(CategoryType.FRUIT);
+		changeTab(primaryCategories[PrimaryCategory.FRUIT]);
 		inventoryUpdated();
 	}
 
 	const onSelectTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.preventDefault();
 		const selectedTab = (event.target as HTMLButtonElement).dataset.target as string;
-		changeTab(categoryTypeLookupTable[selectedTab]);
+		changeTab(primaryCategories[selectedTab]);
 	};
 
 	const onSearch = (searchQuery: string): void => {
 		const query = searchQuery.toLowerCase();
 
 		if (query.length === 0) {
-			changeTab(CategoryType.FRUIT);
+			changeTab(primaryCategories[PrimaryCategory.FRUIT]);
 			return;
 		}
 
 		setSearchQuery(searchQuery);
-		setSelectedTab(undefined);
-
 	};
 
 	const inventoryUpdated = () => {
@@ -111,8 +110,8 @@ const InventoryManagement = (props: InventoryViewProps) => {
 			<nav className={"inventory-tab-list"}>
 				{inventoryTabs.map(t => {
 					return (
-						<div className={`inventory-selector ${selectedTab === t ? 'selected' : ''}`} key={`inventory-selector-${t}`}>
-							<button data-target={t} onClick={e => onSelectTab(e)}>{t}</button>
+						<div key={`inventory-selector-${primaryCategories[t].id}`} className={`inventory-selector ${selectedTab.id === primaryCategories[t].id ? 'selected' : ''}`}>
+							<button data-target={t} onClick={e => onSelectTab(e)}>{primaryCategories[t].id}</button>
 						</div>
 					);
 				})}
@@ -123,9 +122,9 @@ const InventoryManagement = (props: InventoryViewProps) => {
 					<div className={"inventory-tab-containers"}>
 						{inventoryTabs.map(t => {
 							return (
-								<div className={`grid inventory-tab tab-${t} ${selectedTab === t ? 'shown' : ''}`} key={`inventory-content-tab-${t}`}>
+								<div key={`inventory-content-tab-${primaryCategories[t].id}`} className={`grid inventory-tab tab-${primaryCategories[t].id} ${selectedTab.id === primaryCategories[t].id ? 'shown' : ''}`}>
 									{availableIngredients
-										.filter(i => i.item.category === t)
+										.filter(i => i.item.categories.includes(primaryCategories[t]))
 										.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i)?.stack || 0} />)}
 								</div>
 							);
