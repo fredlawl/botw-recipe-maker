@@ -13,13 +13,30 @@ const bakedRecipes: Recipe[] = [
 	new Recipe("Blackened Crab", [
 		"crab"
 	]),
-	// new Recipe("Blueshell Escargot", []),
-	// new Recipe("Campfire Egg", []),
-	// new Recipe("Charred Pepper", []),
-	// new Recipe("Roasted Acorn", []),
-	// new Recipe("Roasted Armoranth", []),
-	// new Recipe("Roasted Bass", []),
-	// new Recipe("Roasted Big Radish", []),
+	new Recipe("Blueshell Escargot", [
+		"hearty-blueshell-snail"
+	]),
+	new Recipe("Campfire Egg", [
+		"bird-egg"
+	]),
+	new Recipe("Charred Pepper", [
+		"spicy-pepper"
+	]),
+	new Recipe("Roasted Acorn", [
+		"acorn"
+	]),
+	new Recipe("Roasted Armoranth", [
+		"armoranth"
+	]),
+	new Recipe("Roasted Bass", [
+		"roasted-bass"
+	]),
+	new Recipe("Hearty Roasted Bass", [
+		"hearty-bass"
+	]),
+	new Recipe("Roasted Big Radish", [
+		"big-hearty-radish"
+	]),
 	// new Recipe("Roasted Bird Drumstick", []),
 	// new Recipe("Roasted Bird Thigh", []),
 	// new Recipe("Roasted Carp", []),

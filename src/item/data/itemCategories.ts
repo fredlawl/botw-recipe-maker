@@ -1,36 +1,52 @@
 import ItemCategory from "../ItemCategory";
 
-enum PrimaryCategory {
+enum Category {
 	FRUIT,
 	MEAT,
+	RED_MEAT,
+	POULTRY,
 	SHROOMS,
 	VEGETABLES,
-	FISH,
-	PLANTS,
-	INSECTS,
-	REPTILE,
+	SEAFOOD,
+	CRAB,
+	FISH_AND_SNALES,
 	MISC,
+	PLANTS,
+	CRITTERS,
 }
 
+const subCategories: any = {
+	[Category.RED_MEAT]: new ItemCategory("Red Meat"),
+	[Category.POULTRY]: new ItemCategory("Poultry"),
+	[Category.CRAB]: new ItemCategory("Crab"),
+	[Category.FISH_AND_SNALES]: new ItemCategory("Fish & Snails"),
+};
+
 const primaryCategories: any = {
-	[PrimaryCategory.FRUIT]: new ItemCategory("Fruit"),
-	[PrimaryCategory.MEAT]: new ItemCategory("Meat"),
-	[PrimaryCategory.SHROOMS]: new ItemCategory("Shrooms"),
-	[PrimaryCategory.VEGETABLES]: new ItemCategory("Vegetables"),
-	[PrimaryCategory.FISH]: new ItemCategory("Fish"),
-	[PrimaryCategory.PLANTS]: new ItemCategory("Plants"),
-	[PrimaryCategory.INSECTS]: new ItemCategory("Insects"),
-	[PrimaryCategory.REPTILE]: new ItemCategory("Reptiles"),
-	[PrimaryCategory.MISC]: new ItemCategory("Misc"),
+	[Category.FRUIT]: new ItemCategory("Fruit"),
+	[Category.SHROOMS]: new ItemCategory("Shrooms"),
+	[Category.VEGETABLES]: new ItemCategory("Vegetable"),
+	[Category.MEAT]: new ItemCategory("Meat", [
+		subCategories[Category.RED_MEAT],
+		subCategories[Category.POULTRY]
+	]),
+	[Category.SEAFOOD]: new ItemCategory("Seafood", [
+		subCategories[Category.CRAB],
+		subCategories[Category.FISH_AND_SNALES],
+	]),
+	[Category.MISC]: new ItemCategory("Misc"),
+	[Category.PLANTS]: new ItemCategory("Plants"),
+	[Category.CRITTERS]: new ItemCategory("Critters"),
 };
 
 const allItemCategories: ItemCategory[] = [
 	...Object.values(primaryCategories) as ItemCategory[],
-	new ItemCategory("Seafood")
+	...Object.values(subCategories) as ItemCategory[]
 ];
 
 export {
-	PrimaryCategory,
+	Category,
 	primaryCategories,
+	subCategories,
 	allItemCategories
 };

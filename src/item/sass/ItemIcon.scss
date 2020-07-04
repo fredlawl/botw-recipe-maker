@@ -425,6 +425,11 @@ $food-ingredient-y-offset: -15px;
   // ---------------------------------------------------------------------------
   // Materials
   // ---------------------------------------------------------------------------
+  &.rock-salt {
+	background-position-y: -1069px;
+	@include itemSprite(7);
+  }
+
   &.courser-bee-honey {
 	background-position-y: -1499px;
 	@include itemSprite(8);

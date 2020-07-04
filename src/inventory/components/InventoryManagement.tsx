@@ -8,7 +8,7 @@ import ItemStack from "../../item/ItemStack";
 import InventoryTally from "./InventoryTally";
 import {Item} from "../../item/Item";
 import {allIngredients} from "../../item/data/materials"
-import {primaryCategories, PrimaryCategory} from "../../item/data/itemCategories";
+import {primaryCategories, Category} from "../../item/data/itemCategories";
 import Material from "../../item/Material";
 import ItemCategory from "../../item/ItemCategory";
 
@@ -23,7 +23,7 @@ interface InventoryViewProps {
 const InventoryManagement = (props: InventoryViewProps) => {
 	const [cacheId, setCacheId] = useState(0);
 	const [inventory, setInventory] = useState(props.inventory);
-	const [selectedTab, setSelectedTab] = useState<ItemCategory>(primaryCategories[PrimaryCategory.FRUIT]);
+	const [selectedTab, setSelectedTab] = useState<ItemCategory>(primaryCategories[Category.FRUIT]);
 	const [searchQuery, setSearchQuery] = useState('');
 	const searchElement = useRef<HTMLInputElement>(null);
 
@@ -67,7 +67,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	const onClearAll = (): void => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
-		changeTab(primaryCategories[PrimaryCategory.FRUIT]);
+		changeTab(primaryCategories[Category.FRUIT]);
 		inventoryUpdated();
 	}
 
@@ -81,7 +81,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		const query = searchQuery.toLowerCase();
 
 		if (query.length === 0) {
-			changeTab(primaryCategories[PrimaryCategory.FRUIT]);
+			changeTab(primaryCategories[Category.FRUIT]);
 			return;
 		}
 
