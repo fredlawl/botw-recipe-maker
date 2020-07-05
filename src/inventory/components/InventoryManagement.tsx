@@ -68,7 +68,16 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
 		inventoryUpdated();
-	}
+	};
+
+	const onFillInventory = (): void => {
+		setCacheId(cacheId + 1);
+		inventory.clear();
+		for (const item of allIngredients) {
+			inventory.addInventoryItem(new ItemStack<Item>(item, ItemStack.STACK_MAX));
+		}
+		inventoryUpdated();
+	};
 
 	const onSelectTab = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		event.preventDefault();
@@ -94,7 +103,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		}
 
 		setInventory(clonedInventory);
-	}
+	};
 
 	return (
 		<section className={"inventory-management"}>
@@ -140,6 +149,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 				}
 			</div>
 
+			<button className={"clear-all-btn"} onClick={e => onFillInventory()}>Fill Inventory</button>
 			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear Inventory</button>
 
 			<ReactTooltip />
