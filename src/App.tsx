@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, Route, Switch} from 'react-router-dom';
 import './App.scss';
 import Main from "./pages/Main";
-// import About from "./pages/About";
+import About from "./pages/About";
 
 const App = () => {
 	return (
@@ -10,15 +10,15 @@ const App = () => {
 			<div className={"navigation"}>
 				<Link to={"/"} title={"BOTW Meal Planner"}>BOTW Meal Planner</Link>
 				<nav>
-					{/*<Link to={"/about"} title={"About"}>About</Link>*/}
+					<Link to={"/about"} title={"About"}>About</Link>
 				</nav>
 			</div>
-			<div className={"app"}>
+			<main className={"app"}>
 				<Switch>
 					<Route path="/" component={Main} exact />
-					{/*<Route path="/about" component={About} />*/}
+					<Route path="/about" component={About} />
 				</Switch>
-			</div>
+			</main>
 		</div>
 	);
 }
