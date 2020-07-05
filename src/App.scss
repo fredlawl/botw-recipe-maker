@@ -1,5 +1,31 @@
 @import "sass/helpers";
 
+.navigation {
+  padding: rem(20px);
+  background-color: #1e78ff;
+
+  &::after {
+	content: "";
+	clear: both;
+	display: table;
+  }
+
+  a {
+	color: #ffffff;
+	font-weight: 600;
+	text-decoration: none;
+	font-size: rem(24px);
+
+	&:hover {
+	  text-decoration: underline;
+	}
+  }
+
+  nav {
+	float: right;
+  }
+}
+
 .app {
   display: flex;
   flex-direction: row;

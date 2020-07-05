@@ -1,22 +1,24 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {Link, Route, Switch} from 'react-router-dom';
 import './App.scss';
-import InventoryManagement from "./inventory/components/InventoryManagement";
-import Inventory from "./inventory/Inventory";
-import RecipeLocator from "./recipe-search/components/RecipeLocator";
-
-const defaultInventory = new Inventory();
+import Main from "./pages/Main";
+// import About from "./pages/About";
 
 const App = () => {
-	const [inventory, setInventory] = useState(defaultInventory);
-
-	const onInventoryUpdated = (newInventory: Inventory) => {
-		setInventory(newInventory);
-	};
-
 	return (
-		<div className={"app"}>
-			<InventoryManagement inventory={inventory} onInventoryUpdated={onInventoryUpdated}/>
-			<RecipeLocator inventory={inventory}/>
+		<div>
+			<div className={"navigation"}>
+				<Link to={"/"} title={"BOTW Meal Planner"}>BOTW Meal Planner</Link>
+				<nav>
+					{/*<Link to={"/about"} title={"About"}>About</Link>*/}
+				</nav>
+			</div>
+			<div className={"app"}>
+				<Switch>
+					<Route path="/" component={Main} exact />
+					{/*<Route path="/about" component={About} />*/}
+				</Switch>
+			</div>
 		</div>
 	);
 }
