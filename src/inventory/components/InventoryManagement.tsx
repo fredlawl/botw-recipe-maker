@@ -67,7 +67,6 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	const onClearAll = (): void => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
-		changeTab(primaryCategories[Category.FRUIT]);
 		inventoryUpdated();
 	}
 
