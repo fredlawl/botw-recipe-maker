@@ -22,7 +22,7 @@ describe("RecipeIngredient.matches()", function () {
 	});
 });
 
-describe("Recipe.isCraftable()", () => {
+describe("Recipe.makeup()", () => {
 	const strawberry = new Material("Strawberry", [
 		primaryCategories[Category.FRUIT]
 	], [], ImmunityBuffType.NONE);
@@ -69,7 +69,7 @@ describe("Recipe.isCraftable()", () => {
 
 	test("recipe with no defined logic is craftable", () => {
 		const thinAirRecipe = new Recipe("Thin air", []);
-		expect(thinAirRecipe.isCraftable([])).toBe(true);
+		expect(thinAirRecipe.makeup([])).toBe(null);
 	});
 
 	test("empty ingredients makes the item not craftable", () => {
@@ -77,64 +77,92 @@ describe("Recipe.isCraftable()", () => {
 			Logic.OR,
 			new RecipeIngredient(strawberry, 1)
 		]);
-		expect(recipe.isCraftable([])).toBe(false);
+		expect(recipe.makeup([])).toBe(null);
 	});
 
 	test("Logic.AND works", () => {
-		expect(strawberryAndBananaCream.isCraftable([
+		const expected = {
+			recipe: strawberryAndBananaCream,
+			materials: [
+				strawberry,
+				banana
+			]
+		};
+
+		expect(strawberryAndBananaCream.makeup([
 			new ItemStack<Material>(strawberry, 1),
 			new ItemStack<Material>(banana, 1),
 			new ItemStack<Material>(extra, 1),
-		])).toBe(true);
+		])).toStrictEqual(expected);
 	});
 
 	test("Logic.AND fails", () => {
-		expect(strawberryAndBananaCream.isCraftable([
+		expect(strawberryAndBananaCream.makeup([
 			new ItemStack<Material>(strawberry, 1),
 			new ItemStack<Material>(extra, 1),
-		])).toBe(false);
+		])).toBe(null);
 	});
 
 	test("Logic.OR works", () => {
-		expect(strawberryOrBananaCream.isCraftable([
+		const expected = {
+			recipe: strawberryOrBananaCream,
+			materials: [
+				banana
+			]
+		};
+
+		expect(strawberryOrBananaCream.makeup([
 			new ItemStack<Material>(banana, 1),
 			new ItemStack<Material>(extra, 1),
-		])).toBe(true);
-	});
-
-	test("Logic.OR fails", () => {
-		expect(strawberryOrBananaCream.isCraftable([
-			new ItemStack<Material>(extra, 1),
-		])).toBe(false);
+		])).toStrictEqual(expected);
 	});
 
 	test("Logic.OR fails when no items match criteria", () => {
-		expect(strawberryOrBananaCream.isCraftable([
+		expect(strawberryOrBananaCream.makeup([
 			new ItemStack<Material>(extra, 1),
-		])).toBe(false);
+		])).toBe(null);
 	});
 
+	// todo: See Recipe makeup algorithm for details on why this fails.
 	test("match on categories and items", () => {
-		expect(fruitSmoothie.isCraftable([
+		const expected = {
+			recipe: fruitSmoothie,
+			materials: [
+				banana,
+				strawberry
+			]
+		};
+
+		expect(fruitSmoothie.makeup([
 			new ItemStack<Material>(strawberry, 2),
 			new ItemStack<Material>(banana, 2),
-		])).toBe(true);
+		])).toStrictEqual(expected);
 	});
 
 	test("match on categories and items fails", () => {
-		expect(fruitSmoothie.isCraftable([
+		expect(fruitSmoothie.makeup([
 			new ItemStack<Material>(strawberry, 0),
 			new ItemStack<Material>(banana, 1),
-		])).toBe(false);
+		])).toBe(null);
 	});
 
 	test("deeply nested matches work", () => {
-		expect(smoothie.isCraftable([
+		const expected = {
+			recipe: smoothie,
+			materials: [
+				strawberry,
+				banana,
+				blueberry,
+				ice
+			]
+		};
+
+		expect(smoothie.makeup([
 			new ItemStack<Material>(strawberry, 10),
 			new ItemStack<Material>(banana, 10),
 			new ItemStack<Material>(blueberry, 10),
 			new ItemStack<Material>(ice, 10),
-		])).toBe(true);
+		])).toStrictEqual(expected);
 	});
 
 });

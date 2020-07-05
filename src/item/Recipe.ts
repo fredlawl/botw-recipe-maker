@@ -1,6 +1,7 @@
 import ItemStack from "./ItemStack";
 import Entity from "../Entity";
 import {Item} from "./Item";
+import Material from "./Material";
 
 export enum Logic {
 	AND,
@@ -76,18 +77,20 @@ export default class Recipe extends Entity<Recipe> {
 	}
 
 	/**
-	 * This isn't a very performant function. Until the performance is
-	 * truly terrible, we're taking a more naive implementation to satisfy
-	 * tests and to make this work.
+	 * A pre-craft function that not only determines if a recipe is craftable,
+	 * but also provides the materials used to make that decision.
+	 *
 	 * @param ingredients
+	 * @return If this recipe couldn't be crafted, we return null, otherwise,
+	 * return an object of the recipe + ingredients used to make the recipe.
 	 */
-	public isCraftable(ingredients: ItemStack<Item>[]): boolean {
+	public makeup(ingredients: ItemStack<Item>[]): { recipe: Recipe, materials: Material[] } | null {
 		if (!this.recipeLogic.length) {
-			return true;
+			return null;
 		}
 
 		if (!ingredients.length) {
-			return false;
+			return null;
 		}
 
 		/*
@@ -106,21 +109,32 @@ export default class Recipe extends Entity<Recipe> {
 			entities[item.item.id] = item;
 		}
 
-		return this.isCraftableHelper(entities, this.recipeLogic);
+		const materials = this.makeupHelper(entities, this.recipeLogic);
+		if (materials.length === 0) {
+			return null;
+		}
+
+		return {
+			recipe: Recipe.clone(this),
+			materials: materials
+		}
 	}
 
 	/*
 	 * Recursively check matching of our inventory to the ingredients
 	 * for the recipe.
 	 */
-	private isCraftableHelper(inventory: any, recipeLogic: any[]): boolean {
+	private makeupHelper(inventory: any, recipeLogic: any[]): Material[] {
 		const logicOp = recipeLogic[0];
 		const ingredients: RecipeIngredient[] = recipeLogic.slice(1, recipeLogic.length);
+		let materials: Material[] = [];
 		const results = [];
 
 		for (const ingredient of ingredients) {
 			if (Array.isArray(ingredient)) {
-				results.push(this.isCraftableHelper(inventory, ingredient));
+				const mats = this.makeupHelper(inventory, ingredient);
+				materials = [...materials, ...mats];
+				results.push(mats.length > 0);
 				continue;
 			}
 
@@ -133,15 +147,27 @@ export default class Recipe extends Entity<Recipe> {
 				continue;
 			}
 
+			// todo: There's a bug such that we introduce categories as materials, when materials are actually not categories
+			//   This needs to be thought about some more.
 			if (ingredient.matches(inventory[ingredient.entity.id].item, inventory[ingredient.entity.id].stack)) {
-				// Quick short circuit because we know there's at least 1 match
-				if (logicOp === Logic.OR)
-					return true;
-
+				materials.push(inventory[ingredient.entity.id].item);
 				results.push(true);
 			}
 		}
 
-		return !results.includes(false) && results.length === ingredients.length;
+		/*
+		 * We have to remove the short-circuit logic to match on all ingredients
+		 * that would satisfy the OR condition.
+		 */
+		if (logicOp === Logic.OR && results.includes(true)) {
+			return materials;
+		}
+
+		if (logicOp === Logic.AND && !results.includes(false) && results.length === ingredients.length) {
+			return materials;
+		}
+
+		// Return empty array if we have no matches
+		return [];
 	}
 }

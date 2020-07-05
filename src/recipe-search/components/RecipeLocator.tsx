@@ -8,7 +8,8 @@ interface RecipeLocatorProps {
 }
 
 const RecipeLocator = (props: RecipeLocatorProps) => {
-	const matchedRecipes = allRecipes.filter(r => r.isCraftable(props.inventory.items));
+	let matchedRecipes = allRecipes.map(r => r.makeup(props.inventory.items));
+	matchedRecipes = matchedRecipes.filter(r => r !== null);
 
 	return (
 		<div className={"recipe-locator"}>
@@ -109,7 +110,18 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 					<div>
 						{matchedRecipes.length > 0 &&
 							<ul>
-								{matchedRecipes.map(r => <li key={r.id}>{r.name}</li>)}
+								{matchedRecipes.map(r => {
+									return (
+										<li key={r?.recipe.id}>
+											{r?.recipe.name}
+											<ul>
+												{r?.materials.map(m => {
+													return <li key={m.id}>{m.name}</li>
+												})}
+											</ul>
+										</li>
+									);
+								})}
 							</ul>
 						}
 					</div>
