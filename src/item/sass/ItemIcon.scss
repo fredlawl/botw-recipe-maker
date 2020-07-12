@@ -1,3 +1,5 @@
+@import "../../sass/helpers";
+
 $icon-width: 96px;
 $icon-height: 96px;
 
@@ -33,6 +35,12 @@ $food-ingredient-y-offset: -15px;
   width: $icon-width;
   height: $icon-height;
   display: block;
+  transform: scale(0.5) translate(-25%, -25%);
+  transform-origin: center;
+
+  @include mq-above(tablet) {
+	transform: scale(1);
+  }
 
   // ---------------------------------------------------------------------------
   // Fruit

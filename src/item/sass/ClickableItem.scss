@@ -1,8 +1,15 @@
 @import "../../sass/helpers";
 
 .clickableIngredient {
-	position: relative;
-	cursor: pointer;
+  position: relative;
+  cursor: pointer;
+  width: rem(96px);
+  height: rem(96px);
+
+  .icon-wrapper {
+	height: 100%;
+	width: 100%;
+  }
 
   .numberInInventory {
 	position: absolute;
@@ -14,7 +21,7 @@
 	width: rem(50px);
 	text-align: right;
 	text-shadow: 0 0 rem(3px) #000000;
-	font-size: rem(28px);
+	font-size: rem(24px);
 	font-weight: 500;
 	font-family: sans-serif;
 

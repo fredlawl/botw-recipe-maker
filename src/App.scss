@@ -37,13 +37,20 @@
   .recipe-locator {
 	display: flex;
 	flex-direction: column;
-	flex-basis: 100%;
-	flex: 1;
   }
 
   .inventory-management {
-	flex: 0;
 	margin-right: rem(20px);
+
+	@include mq-above(tablet-large) {
+	  width: 33%;
+	}
+
+	.inventory-tally {
+	  @include mq-above(tablet-large) {
+		display: block;
+	  }
+	}
   }
 
   .recipe-locator {

@@ -33,10 +33,13 @@ const ClickableItem = (props: props) => {
 		<div
 			className={"clickableIngredient"}>
 			<div
-				data-tip={props.item.name}
-				className={getItemIconClass(props.item)}
-				title={props.item.name}
-				onClick={() => updateAmount(stack.stack + 1)}/>
+				className={"icon-wrapper"}
+				onClick={() => updateAmount(stack.stack + 1)}>
+				<div
+					data-tip={props.item.name}
+					className={getItemIconClass(props.item)}
+					title={props.item.name} />
+			</div>
 			<input
 				onChange={e => updateAmount(parseInt(e.target.value))}
 				onFocus={e => e.target.select()}

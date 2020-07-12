@@ -1,3 +1,38 @@
 @function rem($size) {
   @return $size / 16px * 1rem;
 }
+
+$breakpoints: (
+		phone-small: 340,
+		phone-large: 600,
+		tablet: 870,
+		tablet-large: 1030,
+		desktop-small: 1230,
+		desktop-medium: 1270,
+);
+
+@function breakpoint($bp) {
+  @if map-has_key($breakpoints, $bp) == true {
+	@return map-get($breakpoints, $bp) + 0px;
+  } @else {
+	@return null;
+  }
+}
+
+@mixin mq-below($breakpoint) {
+  $value: breakpoint($breakpoint);
+  @if $value != null {
+	@media (max-width: $value) { @content; }
+  } @else {
+	@media (max-width: $breakpoint) { @content; }
+  }
+}
+
+@mixin mq-above($breakpoint) {
+  $value: breakpoint($breakpoint);
+  @if $value != null {
+	@media (min-width: $value + 1) { @content; }
+  } @else {
+	@media (min-width: $breakpoint + 1) { @content; }
+  }
+}
