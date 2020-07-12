@@ -113,19 +113,18 @@ const InventoryManagement = (props: InventoryViewProps) => {
 				<sub>Search Shortcut: "/"</sub>
 			</div>
 
-
-			{/*Tabs*/}
-			<nav className={"inventory-tab-list"}>
-				{inventoryTabs.map(t => {
-					return (
-						<div key={`inventory-selector-${primaryCategories[t].id}`} className={`inventory-selector ${selectedTab.id === primaryCategories[t].id ? 'selected' : ''}`}>
-							<button data-target={t} onClick={e => onSelectTab(e)}>{primaryCategories[t].id}</button>
-						</div>
-					);
-				})}
-			</nav>
-
 			<div className={"inventory-view"}>
+				{/*Tabs*/}
+				<nav className={"inventory-tab-list"}>
+					{inventoryTabs.map(t => {
+						return (
+							<div key={`inventory-selector-${primaryCategories[t].id}`} className={`inventory-selector ${selectedTab.id === primaryCategories[t].id ? 'selected' : ''}`}>
+								<button data-target={t} onClick={e => onSelectTab(e)}>{primaryCategories[t].id}</button>
+							</div>
+						);
+					})}
+				</nav>
+
 				{searchQuery.length <= 0 &&
 					<div className={"inventory-tab-containers"}>
 						{inventoryTabs.map(t => {
@@ -149,8 +148,8 @@ const InventoryManagement = (props: InventoryViewProps) => {
 				}
 			</div>
 
-			<button className={"clear-all-btn"} onClick={e => onFillInventory()}>Fill Inventory</button>
-			<button className={"clear-all-btn"} onClick={e => onClearAll()}>Clear Inventory</button>
+			<button className={"inventory-operation"} onClick={e => onFillInventory()}>Fill Inventory</button>
+			<button className={"inventory-operation"} onClick={e => onClearAll()}>Clear Inventory</button>
 
 			<ReactTooltip />
 

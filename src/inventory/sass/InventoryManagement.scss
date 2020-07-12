@@ -9,9 +9,9 @@
   }
 
   .grid {
-	background-color: #000000;
 	display: grid;
-	column-gap: unset;
+	column-gap: .3rem;
+	row-gap: .2rem;
 	grid-template-columns: repeat(auto-fill, rem(76px));
 
 	@include mq-above(tablet) {
@@ -19,8 +19,8 @@
 	}
 
 	.clickableIngredient {
-	  background-color: #000000;
-	  border: 1px solid #ffffff;
+	  background-color: rgba(0, 0, 0, 0.3);
+	  border: 1px solid rgba(255, 255, 255, .3);
 
 	  width: rem(76px);
 	  height: rem(76px);
@@ -35,12 +35,22 @@
   .inventory-tab-list {
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: rem(10px);
+	margin: rem(10px) 0;
   }
 
-  .clear-all-btn {
+  .inventory-operation {
 	margin-bottom: rem(10px);
 	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.3);
+	border: 1px solid rgba(255,255,255,.3);
+	color: white;
+	padding: rem(5px);
+
+	&:focus,
+	&:active {
+	  outline: 0;
+	  box-shadow: 0px 0px rem(3px) 0px #fff;
+	}
   }
 
   .inventory-selector {
@@ -50,11 +60,11 @@
 	&.selected,
 	&:hover {
 	  cursor: pointer;
-	  color: lightcoral;
+	  color: white;
 
 	  button {
 		cursor: pointer;
-		color: lightcoral;
+		text-shadow: 0px 0px rem(3px) #fff;
 	  }
 	}
 
@@ -76,20 +86,16 @@
 
 	.inventory-tab {
 	  position: absolute;
-	  visibility: hidden;
+	  display: none;
 
 	  &.shown {
-		visibility: visible;
+		display: grid;
 		position: inherit;
 	  }
 	}
   }
 
   .inventory-search-wrapper {
-	.inventory-search {
-
-	}
-
 	margin-bottom: rem(10px);
   }
 

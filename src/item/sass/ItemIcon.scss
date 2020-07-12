@@ -28,7 +28,7 @@ $food-ingredient-y-offset: -15px;
 }
 
 @mixin subYOffset($yOffset, $subYOffset) {
-  background-position-y: (-15 * $yOffset + $subYOffset) - ($yOffset * $icon-height);
+  background-position-y: (-15 * $yOffset + $subYOffset) - ($yOffset * $icon-height) - 1;
 }
 
 .icon-item {

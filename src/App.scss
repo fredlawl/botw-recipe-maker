@@ -1,8 +1,31 @@
 @import "sass/helpers";
 
+.app-bg {
+  background: url("/bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+}
+
+.app-bg-overlay {
+  background-color: rgba(0, 0, 0, .7);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+}
+
+#root {
+  position: relative;
+}
+
+button {
+  color: white;
+}
+
 .navigation {
   padding: rem(20px);
-  background-color: #1e78ff;
+  background-color: rgba(0, 0, 0, 0.3);
 
   &::after {
 	content: "";
@@ -32,6 +55,16 @@
   flex-wrap: wrap;
   width: 100%;
   padding: rem(20px);
+  color: white;
+
+  a {
+	color: #fff;
+
+	&:hover {
+	  color: #fff;
+	  text-shadow: 0px 0px rem(3px) #fff;
+	}
+  }
 
   .inventory-management,
   .recipe-locator {
