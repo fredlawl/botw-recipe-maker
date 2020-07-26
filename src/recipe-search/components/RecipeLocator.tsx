@@ -112,11 +112,11 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 							<ul>
 								{matchedRecipes.map(r => {
 									return (
-										<li key={r?.recipe.id}>
-											{r?.recipe.name}
+										<li key={r?.id}>
+											{r?.stack}x {r?.name}
 											<ul>
 												{r?.materials.map(m => {
-													return <li key={m.id}>{m.name}</li>
+													return <li key={m.item.id}>{m.stack}x {m.item.name}</li>
 												})}
 											</ul>
 										</li>

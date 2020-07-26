@@ -1,6 +1,6 @@
 import {BaseItem} from "./Item";
 import {Effectional} from "./Effectional";
-import Effect from "./Effect";
+import Effect, {EffectType} from "./Effect";
 import { ImmunityBuffType } from "./ImmunityBuff";
 
 class CraftedMaterial extends BaseItem<CraftedMaterial> implements Effectional {
@@ -11,6 +11,16 @@ class CraftedMaterial extends BaseItem<CraftedMaterial> implements Effectional {
 		super(name, []);
 		this.effects = effects;
 		this.immunity = immunity;
+		this._id = this.createHashCode();
+	}
+
+	private createHashCode(): string {
+		let effects = this.effects.map(e => e.effect).sort(EffectType.compareTo);
+		return [
+			this._id,
+			...effects,
+			this.immunity
+		].join('_');
 	}
 }
 

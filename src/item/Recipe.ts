@@ -33,6 +33,8 @@ export class RecipeIngredient {
 export default class Recipe extends Entity<Recipe> {
 	public readonly name: string;
 	public readonly recipeLogic: any;
+	private _craftableMaterials: ItemStack<Material>[] = [];
+	private _stack: number = 0;
 
 	public static clone(prevRecipe: Recipe): Recipe {
 		const newRecipe = new Recipe(prevRecipe.name, prevRecipe.recipeLogic);
@@ -77,19 +79,15 @@ export default class Recipe extends Entity<Recipe> {
 	}
 
 	/**
-	 * A pre-craft function that not only determines if a recipe is craftable,
-	 * but also provides the materials used to make that decision.
+	 * Returns a copy of this recipe that's craftable if and only if the
+	 * materials match. Once a recipe is craftable, we can proceed to
 	 *
 	 * @param ingredients
 	 * @return If this recipe couldn't be crafted, we return null, otherwise,
-	 * return an object of the recipe + ingredients used to make the recipe.
+	 * return a recipe that may be crafted.
 	 */
-	public makeup(ingredients: ItemStack<Item>[]): { recipe: Recipe, materials: Material[] } | null {
-		if (!this.recipeLogic.length) {
-			return null;
-		}
-
-		if (!ingredients.length) {
+	public makeup(ingredients: ItemStack<Item>[]): Recipe | null {
+		if (!this.recipeLogic.length || !ingredients.length) {
 			return null;
 		}
 
@@ -110,24 +108,26 @@ export default class Recipe extends Entity<Recipe> {
 		}
 
 		const materials = this.makeupHelper(entities, this.recipeLogic);
-		if (materials.length === 0) {
+		const stack = materials.length ? Math.min.apply(null, materials.map<number>(m => m.stack)) : 0;
+		if (stack <= 0) {
 			return null;
 		}
 
-		return {
-			recipe: Recipe.clone(this),
-			materials: materials
-		}
+		const recipe = Recipe.clone(this);
+		recipe._craftableMaterials = materials;
+		recipe._stack = stack;
+
+		return recipe;
 	}
 
 	/*
 	 * Recursively check matching of our inventory to the ingredients
 	 * for the recipe.
 	 */
-	private makeupHelper(inventory: any, recipeLogic: any[]): Material[] {
+	private makeupHelper(inventory: any, recipeLogic: any[]): ItemStack<Material>[] {
 		const logicOp = recipeLogic[0];
 		const ingredients: RecipeIngredient[] = recipeLogic.slice(1, recipeLogic.length);
-		let materials: Material[] = [];
+		let materials: ItemStack<Material>[] = [];
 		const results = [];
 
 		for (const ingredient of ingredients) {
@@ -150,7 +150,7 @@ export default class Recipe extends Entity<Recipe> {
 			// todo: There's a bug such that we introduce categories as materials, when materials are actually not categories
 			//   This needs to be thought about some more.
 			if (ingredient.matches(inventory[ingredient.entity.id].item, inventory[ingredient.entity.id].stack)) {
-				materials.push(inventory[ingredient.entity.id].item);
+				materials.push(inventory[ingredient.entity.id]);
 				results.push(true);
 			}
 		}
@@ -169,5 +169,17 @@ export default class Recipe extends Entity<Recipe> {
 
 		// Return empty array if we have no matches
 		return [];
+	}
+
+	get isCraftable(): boolean {
+		return !this._craftableMaterials.length;
+	}
+
+	get materials(): ItemStack<Material>[] {
+		return this._craftableMaterials;
+	}
+
+	get stack(): number {
+		return this._stack;
 	}
 }
