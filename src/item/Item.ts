@@ -1,4 +1,4 @@
-import Entity from "../Entity";
+import {TypedEntity} from "../Entity";
 import ItemCategory from "./ItemCategory";
 
 export interface Item {
@@ -8,7 +8,7 @@ export interface Item {
 	identifiers: string[]
 }
 
-export abstract class BaseItem<T> extends Entity<T> implements Item {
+export abstract class BaseItem<T> extends TypedEntity<T> implements Item {
 	public readonly name: string;
 	public readonly categories: ItemCategory[];
 
@@ -17,11 +17,33 @@ export abstract class BaseItem<T> extends Entity<T> implements Item {
 	protected constructor(name: string, categories: ItemCategory[]) {
 		super(name);
 		this.name = name;
-		this.categories = categories;
-		this._categoryIdentifiers = categories.map(c => c.id);
+
+		this.categories = [];
+		this._categoryIdentifiers = [];
+
+		// We want a single array of all categories this material may belong to
+		categories = categories.reduce<ItemCategory[]>((acc, c) => {
+			return [...acc, ...c.lineage];
+		}, []);
+
+		// Next, we only want the unique ones
+		const uniqueCategoreis: any = [];
+		for (const category of categories) {
+			if (uniqueCategoreis[category.id]) {
+				continue;
+			}
+
+			uniqueCategoreis[category.id] = category;
+			this.categories.push(category);
+			this._categoryIdentifiers.push(category.id);
+		}
 	}
 
 	get identifiers(): string[] {
-		return [this.id, ...this._categoryIdentifiers];
+		return [this.id, ...this.categoryIdentifiers];
+	}
+
+	get categoryIdentifiers(): string[] {
+		return this._categoryIdentifiers;
 	}
 }

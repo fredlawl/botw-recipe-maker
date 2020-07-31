@@ -1,11 +1,13 @@
 import {BaseItem} from "./Item";
 import {Effectional} from "./Effectional";
 import Effect, {EffectType} from "./Effect";
-import { ImmunityBuffType } from "./ImmunityBuff";
+import {ImmunityBuffType} from "./ImmunityBuff";
+import {EntityType} from "../Entity";
 
 class CraftedMaterial extends BaseItem<CraftedMaterial> implements Effectional {
 	public readonly effects: Effect[];
 	public readonly immunity: ImmunityBuffType;
+	public readonly type: EntityType = EntityType.Crafted;
 
 	public constructor(name: string, effects: Effect[], immunity: ImmunityBuffType) {
 		super(name, []);

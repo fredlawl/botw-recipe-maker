@@ -4,21 +4,38 @@ import Material from "../Material";
 import Recipe, {Logic, RecipeIngredient} from "../Recipe";
 import ItemStack from "../ItemStack";
 import {Category, primaryCategories} from "../data/itemCategories";
+import ItemCategory from "../ItemCategory";
+import {materialLookupTable, MaterialType} from "../data/materials";
 
 describe("RecipeIngredient.matches()", function () {
-	const strawberry = new Material("Strawberry", [], [], ImmunityBuffType.NONE);
-	const banana = new Material("Banana", [], [], ImmunityBuffType.NONE);
+	const fruitCategory = new ItemCategory("Fruit");
+	const strawberry = new Material("Strawberry", [
+		fruitCategory
+	], [], ImmunityBuffType.NONE);
+	const banana = new Material("Banana", [
+		fruitCategory
+	], [], ImmunityBuffType.NONE);
 
 	test("entity id does not match", () => {
 		const recipeIngredient = new RecipeIngredient(strawberry, 1);
-		expect(recipeIngredient.matches(banana, 1)).toBe(false);
+		expect(recipeIngredient.matches(new ItemStack<Material>(banana, 1))).toBe(false);
 	});
 
 	test("matching amount is greater than or equal to recipe amount", () => {
 		const ingredient = new RecipeIngredient(strawberry, 1);
-		expect(ingredient.matches(strawberry, 0)).toBe(false);
-		expect(ingredient.matches(strawberry, 1)).toBe(true);
-		expect(ingredient.matches(strawberry, 3)).toBe(true);
+		expect(ingredient.matches(new ItemStack<Material>(strawberry, 0))).toBe(false);
+		expect(ingredient.matches(new ItemStack<Material>(strawberry, 1))).toBe(true);
+		expect(ingredient.matches(new ItemStack<Material>(strawberry, 3))).toBe(true);
+	});
+
+	test("material matches category", () => {
+		const ingredient = new RecipeIngredient(fruitCategory, 1);
+		expect(ingredient.matches(new ItemStack<Material>(strawberry, 1))).toBe(true);
+	});
+
+	test("material should not match different category", () => {
+		const ingredient = new RecipeIngredient(new ItemCategory("Shrooms"), 1);
+		expect(ingredient.matches(new ItemStack<Material>(strawberry, 1))).toBe(false);
 	});
 });
 
@@ -69,7 +86,7 @@ describe("Recipe.makeup()", () => {
 
 	test("recipe with no defined logic is craftable", () => {
 		const thinAirRecipe = new Recipe("Thin air", []);
-		expect(thinAirRecipe.makeup([])).toBe(null);
+		expect(thinAirRecipe.makeup([])).toEqual([]);
 	});
 
 	test("empty ingredients makes the item not craftable", () => {
@@ -77,17 +94,16 @@ describe("Recipe.makeup()", () => {
 			Logic.OR,
 			new RecipeIngredient(strawberry, 1)
 		]);
-		expect(recipe.makeup([])).toBe(null);
+		expect(recipe.makeup([])).toEqual([]);
 	});
 
 	test("Logic.AND works", () => {
-		const expected = {
-			recipe: strawberryAndBananaCream,
-			materials: [
-				strawberry,
-				banana
-			]
-		};
+		const expected = [
+			Recipe.craftable(strawberryAndBananaCream, [
+				new ItemStack<Material>(strawberry, 1),
+				new ItemStack<Material>(banana, 1)
+			])
+		];
 
 		expect(strawberryAndBananaCream.makeup([
 			new ItemStack<Material>(strawberry, 1),
@@ -100,16 +116,15 @@ describe("Recipe.makeup()", () => {
 		expect(strawberryAndBananaCream.makeup([
 			new ItemStack<Material>(strawberry, 1),
 			new ItemStack<Material>(extra, 1),
-		])).toBe(null);
+		])).toEqual([]);
 	});
 
 	test("Logic.OR works", () => {
-		const expected = {
-			recipe: strawberryOrBananaCream,
-			materials: [
-				banana
-			]
-		};
+		const expected = [
+			Recipe.craftable(strawberryOrBananaCream, [
+				new ItemStack<Material>(banana, 1)
+			])
+		];
 
 		expect(strawberryOrBananaCream.makeup([
 			new ItemStack<Material>(banana, 1),
@@ -120,18 +135,30 @@ describe("Recipe.makeup()", () => {
 	test("Logic.OR fails when no items match criteria", () => {
 		expect(strawberryOrBananaCream.makeup([
 			new ItemStack<Material>(extra, 1),
-		])).toBe(null);
+		])).toEqual([]);
 	});
 
-	// todo: See Recipe makeup algorithm for details on why this fails.
-	test("match on categories and items", () => {
-		const expected = {
-			recipe: fruitSmoothie,
-			materials: [
-				banana,
-				strawberry
-			]
-		};
+	test("match on category expect stack of 1 because of two ingredients consumed", () => {
+		const expected = [
+			Recipe.craftable(fruitSmoothie, [
+				new ItemStack<Material>(strawberry, 2),
+			])
+		];
+
+		expect(fruitSmoothie.makeup([
+			new ItemStack<Material>(strawberry, 3),
+		])).toStrictEqual(expected);
+	});
+
+	test("match on category expect stack of 2 because of two ingredients consumed", () => {
+		const expected = [
+			Recipe.craftable(fruitSmoothie, [
+				new ItemStack<Material>(strawberry, 2)
+			]),
+			Recipe.craftable(fruitSmoothie, [
+				new ItemStack<Material>(banana, 2)
+			])
+		];
 
 		expect(fruitSmoothie.makeup([
 			new ItemStack<Material>(strawberry, 2),
@@ -143,26 +170,83 @@ describe("Recipe.makeup()", () => {
 		expect(fruitSmoothie.makeup([
 			new ItemStack<Material>(strawberry, 0),
 			new ItemStack<Material>(banana, 1),
-		])).toBe(null);
+		])).toEqual([]);
 	});
 
-	test("deeply nested matches work", () => {
-		const expected = {
-			recipe: smoothie,
-			materials: [
-				strawberry,
-				banana,
-				blueberry,
-				ice
+	test("fruit and shroom should be null given only fruit", () => {
+		const fruitAndShroom = new Recipe("Fruit and Mushroom Mix", [
+			Logic.AND,
+			new RecipeIngredient(primaryCategories[Category.FRUIT], 1),
+			new RecipeIngredient(primaryCategories[Category.SHROOMS], 1),
+		]);
+
+		expect(fruitAndShroom.makeup([
+			new ItemStack<Material>(strawberry, 1),
+			new ItemStack<Material>(banana, 1)
+		])).toStrictEqual([]);
+	});
+
+	test("fruit and shroom should not be null given 2 fruits + shroom", () => {
+		const shroomie = new Material("shroomie", [primaryCategories[Category.SHROOMS]], [], ImmunityBuffType.NONE);
+		const fruitAndShroom = new Recipe("Fruit and Mushroom Mix", [
+			Logic.AND,
+			new RecipeIngredient(primaryCategories[Category.FRUIT], 1),
+			new RecipeIngredient(primaryCategories[Category.SHROOMS], 1),
+		]);
+
+		const actual = fruitAndShroom.makeup([
+			new ItemStack<Material>(strawberry, 1),
+			new ItemStack<Material>(banana, 1),
+			new ItemStack<Material>(shroomie, 1)
+		]);
+
+		const expected = [
+			Recipe.craftable(fruitAndShroom, [
+				new ItemStack<Material>(strawberry, 1),
+				new ItemStack<Material>(shroomie, 1)
+			])
+		];
+
+		expect(actual).toStrictEqual(expected);
+	});
+
+	test("Fruitcake should work", () => {
+		// Brittle test, but needed for figuring out algorithm
+		const apple = materialLookupTable[MaterialType.APPLE];
+		const caneSugar = materialLookupTable[MaterialType.CANE_SUGAR];
+		const bananna = materialLookupTable[MaterialType.MIGHTY_BANANAS];
+		const wheat = materialLookupTable[MaterialType.TABANTHA_WHEAT];
+		const wildberry = materialLookupTable[MaterialType.WILDBERRY];
+
+		const fruitcake = new Recipe("Fruitcake", [
+			Logic.AND,
+			new RecipeIngredient(wheat, 1),
+			new RecipeIngredient(caneSugar, 1),
+			new RecipeIngredient(primaryCategories[Category.FRUIT], 1),
+			[
+				Logic.OR,
+				new RecipeIngredient(apple, 1),
+				new RecipeIngredient(wildberry, 1),
 			]
-		};
+		]);
 
-		expect(smoothie.makeup([
-			new ItemStack<Material>(strawberry, 10),
-			new ItemStack<Material>(banana, 10),
-			new ItemStack<Material>(blueberry, 10),
-			new ItemStack<Material>(ice, 10),
+		const expected = [
+			Recipe.craftable(fruitcake, [
+				new ItemStack<Material>(apple, 1),
+				new ItemStack<Material>(wheat, 1),
+				new ItemStack<Material>(caneSugar, 1),
+				new ItemStack<Material>(bananna, 1),
+			])
+		];
+
+		expect(fruitcake.makeup([
+			new ItemStack<Material>(apple, 1),
+			new ItemStack<Material>(caneSugar, 1),
+			new ItemStack<Material>(wheat, 1),
+			new ItemStack<Material>(bananna, 1),
 		])).toStrictEqual(expected);
+
 	});
+
 
 });

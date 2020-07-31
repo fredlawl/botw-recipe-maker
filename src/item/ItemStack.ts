@@ -16,6 +16,14 @@ class ItemStack<T extends Item> {
 		this.item = ingredient;
 		this.stack = ItemStack.clamp(amount);
 	}
+
+	public increment(amount: number): ItemStack<T> {
+		return new ItemStack<T>(this.item, this.stack + amount);
+	}
+
+	public decrement(amount: number): ItemStack<T> {
+		return new ItemStack<T>(this.item, this.stack - amount);
+	}
 }
 
 export default ItemStack;

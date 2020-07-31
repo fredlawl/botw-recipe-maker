@@ -1,24 +1,24 @@
 import ItemStack from "../item/ItemStack";
-import {Item} from "../item/Item";
+import Material from "../item/Material";
 
 class Inventory {
 	private _totalCount: number;
-	private _items: Map<string, ItemStack<Item>>;
+	private _items: Map<string, ItemStack<Material>>;
 
 	public static clone(prevInventory: Inventory): Inventory {
 		const newInventory = new Inventory();
 		newInventory._totalCount = prevInventory.totalCount;
-		newInventory._items = new Map<string, ItemStack<Item>>(prevInventory._items);
+		newInventory._items = new Map<string, ItemStack<Material>>(prevInventory._items);
 		return newInventory;
 	}
 
 	public constructor() {
 		this._totalCount = 0;
-		this._items = new Map<string, ItemStack<Item>>();
+		this._items = new Map<string, ItemStack<Material>>();
 	}
 
-	public addInventoryItem(item: ItemStack<Item>): boolean {
-		this.remove(item);
+	public addInventoryItem(item: ItemStack<Material>): boolean {
+		this.remove(item.item);
 
 		// Don't add item if there's no stack
 		if (item.stack <= 0) {
@@ -34,27 +34,27 @@ class Inventory {
 		return this._totalCount;
 	}
 
-	get items(): ItemStack<Item>[] {
+	get items(): ItemStack<Material>[] {
 		return Array.from(this._items.values());
 	}
 
-	public clear(): ItemStack<Item>[] {
+	public clear(): ItemStack<Material>[] {
 		let currentInventory = this.items;
-		this._items = new Map<string, ItemStack<Item>>();
+		this._items = new Map<string, ItemStack<Material>>();
 		this._totalCount = 0;
 		return currentInventory;
 	}
 
-	public remove(item: ItemStack<Item>) {
+	public remove(item: Material) {
 		const foundItem = this.item(item);
 		if (foundItem) {
 			this._totalCount -= foundItem.stack;
-			this._items.delete(item.item.id);
+			this._items.delete(item.id);
 		}
 	}
 
-	public item(item: ItemStack<Item>): ItemStack<Item> | undefined {
-		return this._items.get(item.item.id);
+	public item(item: Material): ItemStack<Material> | undefined {
+		return this._items.get(item.id);
 	}
 }
 
