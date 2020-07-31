@@ -1,7 +1,6 @@
 import React from 'react';
 import Inventory from "../../inventory/Inventory";
 import ItemStack from "../ItemStack";
-import Effect from '../Effect';
 import {ImmunityBuffType} from "../ImmunityBuff";
 import Material from "../Material";
 import {primaryCategories, Category} from "../data/itemCategories";

@@ -74,7 +74,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
 		for (const item of allIngredients) {
-			inventory.addInventoryItem(new ItemStack<Item>(item, ItemStack.STACK_MAX));
+			inventory.addInventoryItem(new ItemStack<Material>(item, ItemStack.STACK_MAX));
 		}
 		inventoryUpdated();
 	};
@@ -132,7 +132,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 								<div key={`inventory-content-tab-${primaryCategories[t].id}`} className={`grid inventory-tab tab-${primaryCategories[t].id} ${selectedTab.id === primaryCategories[t].id ? 'shown' : ''}`}>
 									{availableIngredients
 										.filter(i => i.item.categories.includes(primaryCategories[t]))
-										.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i)?.stack || 0} />)}
+										.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i.item)?.stack || 0} />)}
 								</div>
 							);
 						})}
@@ -143,7 +143,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 					<div className={`grid`}>
 						{availableIngredients
 							.filter(i => i.item.name.toLowerCase().includes(searchQuery))
-							.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i)?.stack || 0} />)}
+							.map(i => <ClickableIngredient key={`${i.item.id}-${cacheId}`} onAmountUpdated={onIngredientUpdate} item={i.item} initialAmount={inventory.item(i.item)?.stack || 0} />)}
 					</div>
 				}
 			</div>
