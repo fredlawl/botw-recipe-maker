@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Inventory from "../inventory/Inventory";
+import {Inventory} from "../inventory/Inventory";
 import InventoryManagement from "../inventory/components/InventoryManagement";
 import RecipeLocator from "../recipe-search/components/RecipeLocator";
 

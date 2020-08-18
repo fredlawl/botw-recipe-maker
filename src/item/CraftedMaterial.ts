@@ -1,6 +1,6 @@
 import {BaseItem} from "./Item";
 import {Effectional} from "./Effectional";
-import Effect, {EffectType} from "./Effect";
+import {Effect, EffectType} from "./Effect";
 import {ImmunityBuffType} from "./ImmunityBuff";
 import {EntityType} from "../Entity";
 

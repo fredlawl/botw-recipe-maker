@@ -6,7 +6,7 @@ export enum EntityType {
 	Crafted
 }
 
-abstract class Entity<T> {
+export abstract class Entity<T> {
 	protected _id: string;
 
 	protected constructor(identifier: string) {
@@ -39,5 +39,3 @@ export abstract class TypedEntity<T> extends Entity<T> {
 		return super.equals(b) && this.isType(b.type);
 	}
 }
-
-export default Entity;

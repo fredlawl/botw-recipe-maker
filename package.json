@@ -19,13 +19,15 @@
     "react-scripts": "3.4.1",
     "react-tooltip": "^4.2.7",
     "slugify": "^1.4.0",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "compile-recipes": "ts-node-script --compiler-options '{\"module\": \"commonjs\"}' src/item/database/compileRecipes.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -3,16 +3,16 @@ import "../sass/InventoryManagement.scss"
 import ClickableIngredient from "../../item/components/ClickableItem";
 import InventorySearch from "./InventorySearch";
 import ReactTooltip from "react-tooltip";
-import Inventory from "../Inventory";
-import ItemStack from "../../item/ItemStack";
+import {Inventory} from "../Inventory";
+import {ItemStack} from "../../item/ItemStack";
 import InventoryTally from "./InventoryTally";
 import {Item} from "../../item/Item";
-import {allIngredients} from "../../item/data/materials"
-import {primaryCategories, Category} from "../../item/data/itemCategories";
-import Material from "../../item/Material";
-import ItemCategory from "../../item/ItemCategory";
+import {allMaterials} from "../../item/database/materials"
+import {primaryCategories, Category} from "../../item/database/itemCategories";
+import {Material} from "../../item/Material";
+import {ItemCategory} from "../../item/ItemCategory";
 
-const availableIngredients: ItemStack<Material>[] = allIngredients.map(i => new ItemStack(i, 0));
+const availableIngredients: ItemStack<Material>[] = allMaterials.map(i => new ItemStack(i, 0));
 const inventoryTabs: string[] = Object.keys(primaryCategories);
 
 interface InventoryViewProps {
@@ -73,7 +73,7 @@ const InventoryManagement = (props: InventoryViewProps) => {
 	const onFillInventory = (): void => {
 		setCacheId(cacheId + 1);
 		inventory.clear();
-		for (const item of allIngredients) {
+		for (const item of allMaterials) {
 			inventory.addInventoryItem(new ItemStack<Material>(item, ItemStack.STACK_MAX));
 		}
 		inventoryUpdated();

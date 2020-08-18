@@ -1,5 +1,5 @@
 import {TypedEntity} from "../Entity";
-import ItemCategory from "./ItemCategory";
+import {ItemCategory} from "./ItemCategory";
 
 export interface Item {
 	id: string,

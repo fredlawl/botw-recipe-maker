@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemCategory from "../ItemCategory";
+import {ItemCategory} from "../ItemCategory";
 
 describe("Inventory.addInventoryItem()", () => {
 	test('lineage recursively gets the parents', () => {

@@ -1,6 +1,6 @@
 import {Item} from "./Item";
 
-class ItemStack<T extends Item> {
+export class ItemStack<T extends Item> {
 	public static readonly STACK_MIN: number = 0;
 	public static readonly STACK_MAX: number = 999;
 
@@ -25,5 +25,3 @@ class ItemStack<T extends Item> {
 		return new ItemStack<T>(this.item, this.stack - amount);
 	}
 }
-
-export default ItemStack;

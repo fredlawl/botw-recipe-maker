@@ -1,4 +1,4 @@
-import Effect from "./Effect";
+import {Effect} from "./Effect";
 import {ImmunityBuffType} from "./ImmunityBuff";
 
 export interface Effectional {

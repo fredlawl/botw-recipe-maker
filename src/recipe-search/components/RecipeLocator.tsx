@@ -1,8 +1,8 @@
 import React from "react";
 import "../sass/RecipeLocator.scss";
-import Inventory from "../../inventory/Inventory";
-import {allRecipes} from "../../item/data/recipes";
-import Recipe from "../../item/Recipe";
+import {Inventory} from "../../inventory/Inventory";
+import {RecipeMatcher} from "../RecipeMatcher";
+import {Recipe} from "../../item/Recipe";
 
 interface RecipeLocatorProps {
 	inventory: Inventory
@@ -11,10 +11,8 @@ interface RecipeLocatorProps {
 const RecipeLocator = (props: RecipeLocatorProps) => {
 	// let matchedRecipes = allRecipes.map(r => r.makeup(props.inventory.items));
 	// matchedRecipes = matchedRecipes.filter(r => r !== null);
-	const matchedRecipes: Recipe[] = allRecipes.reduce<Recipe[]>((acc, r) => {
-		return [...acc, ...r.makeup(props.inventory)];
-	}, []);
-
+	const matchedRecipes: Recipe[] = (new RecipeMatcher(props.inventory)).getRecipes();
+	console.log(matchedRecipes);
 	return (
 		<div className={"recipe-locator"}>
 			<div className={"container"}>
@@ -116,10 +114,10 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 							<ul>
 								{matchedRecipes.map(r => {
 									return (
-										<li key={r.compositeKey}>
+										<li key={r.id}>
 											{r?.stack}x {r?.name}
 											<ul>
-												{r?.materials.map(m => {
+												{r?.ingredients.map(m => {
 													return <li key={m.item.id}>{m.stack}x {m.item.name}</li>
 												})}
 											</ul>

@@ -1,11 +1,11 @@
 import {Effectional} from "./Effectional";
 import {ImmunityBuffType} from "./ImmunityBuff";
-import Effect from "./Effect";
+import {Effect} from "./Effect";
 import {BaseItem} from "./Item";
-import ItemCategory from "./ItemCategory";
+import {ItemCategory} from "./ItemCategory";
 import {EntityType} from "../Entity";
 
-class Material extends BaseItem<Material> implements Effectional {
+export class Material extends BaseItem<Material> implements Effectional {
 	public readonly effects: Effect[];
 	public readonly immunity: ImmunityBuffType;
 	public readonly type: EntityType = EntityType.Material;
@@ -16,5 +16,3 @@ class Material extends BaseItem<Material> implements Effectional {
 		this.immunity = immunity;
 	}
 }
-
-export default Material;

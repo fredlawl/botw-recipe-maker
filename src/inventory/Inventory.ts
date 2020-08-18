@@ -1,7 +1,7 @@
-import ItemStack from "../item/ItemStack";
-import Material from "../item/Material";
+import {ItemStack} from "../item/ItemStack";
+import {Material} from "../item/Material";
 
-class Inventory {
+export class Inventory {
 	private _totalCount: number;
 	private _items: Map<string, ItemStack<Material>>;
 
@@ -57,5 +57,3 @@ class Inventory {
 		return this._items.get(item.id);
 	}
 }
-
-export default Inventory;

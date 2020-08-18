@@ -1,5 +1,6 @@
 import React from "react";
 
+// @ts-ignore
 function isSuperset(set, subset) {
 	for (let elem of subset) {
 		if (!set.has(elem)) {
@@ -10,33 +11,6 @@ function isSuperset(set, subset) {
 }
 
 describe("Indexing proof of concept", () => {
-	const materials = [
-		{
-			name: 'Flour',
-			id: 'flour'
-		},
-		{
-			name: 'Strawberry',
-			id: 'strawberry'
-		},
-		{
-			name: 'Blueberry',
-			id: 'blueberry'
-		},
-		{
-			name: 'Banana',
-			id: 'banana'
-		},
-		{
-			name: "Ice",
-			id: 'ice'
-		}
-	];
-
-	const materialsIndex = new Map<string, number>(materials.map((m, i) => {
-		return [ m.id, i ];
-	}));
-
 	const recipes = [
 		{
 			name: 'Fruit Smoothie',
@@ -76,17 +50,17 @@ describe("Indexing proof of concept", () => {
 		}
 	];
 
-	let manyMaterialsToManyRecipiesIndex = new Map<string, number[]>();
-	for (let i = 0; i < recipes.length; i++) {
-		const ingredientKeys = Array.from(recipes[i].ingredients.keys());
-		for (const ik of ingredientKeys) {
-			if (!manyMaterialsToManyRecipiesIndex.has(ik)) {
-				manyMaterialsToManyRecipiesIndex.set(ik, []);
-			}
-
-			manyMaterialsToManyRecipiesIndex.get(ik)?.push(i);
-		}
-	}
+	// let manyMaterialsToManyRecipesIndex = new Map<string, number[]>();
+	// for (let i = 0; i < recipes.length; i++) {
+	// 	const ingredientKeys = Array.from(recipes[i].ingredients.keys());
+	// 	for (const ik of ingredientKeys) {
+	// 		if (!manyMaterialsToManyRecipesIndex.has(ik)) {
+	// 			manyMaterialsToManyRecipesIndex.set(ik, []);
+	// 		}
+	//
+	// 		manyMaterialsToManyRecipesIndex.get(ik)?.push(i);
+	// 	}
+	// }
 
 	const inventory = new Map<string, number>([
 		['strawberry', 999],
@@ -96,7 +70,7 @@ describe("Indexing proof of concept", () => {
 	]);
 
 	test("test", () => {
-		console.log('materials: ', materialsIndex, 'recipes: ', recipes, 'many to many', manyMaterialsToManyRecipiesIndex)
+		// console.log('recipes: ', recipes, 'many to many', manyMaterialsToManyRecipiesIndex)
 
 		const firstPassRecipies: any[] = [];
 		const secondPassRecipies: any[] = [];

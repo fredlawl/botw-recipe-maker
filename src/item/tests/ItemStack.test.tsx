@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemStack from "../ItemStack";
+import {ItemStack} from "../ItemStack";
 
 describe("InventoryStack.clamp()", () => {
 	test("test clamp works as intended", () => {

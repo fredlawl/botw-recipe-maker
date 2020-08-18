@@ -1,6 +1,6 @@
-import ItemCategory from "../ItemCategory";
+import {ItemCategory} from "../ItemCategory";
 
-enum Category {
+export enum Category {
 	FRUIT,
 	MEAT,
 	RED_MEAT,
@@ -15,14 +15,14 @@ enum Category {
 	CRITTERS,
 }
 
-const subCategories: any = {
+export const subCategories: any = {
 	[Category.RED_MEAT]: new ItemCategory("Red Meat"),
 	[Category.POULTRY]: new ItemCategory("Poultry"),
 	[Category.CRAB]: new ItemCategory("Crab"),
 	[Category.FISH_AND_SNALES]: new ItemCategory("Fish & Snails"),
 };
 
-const primaryCategories: any = {
+export const primaryCategories: any = {
 	[Category.FRUIT]: new ItemCategory("Fruit"),
 	[Category.SHROOMS]: new ItemCategory("Shrooms"),
 	[Category.VEGETABLES]: new ItemCategory("Vegetable"),
@@ -39,14 +39,7 @@ const primaryCategories: any = {
 	[Category.CRITTERS]: new ItemCategory("Critters"),
 };
 
-const allItemCategories: ItemCategory[] = [
+export const allItemCategories: ItemCategory[] = [
 	...Object.values(primaryCategories) as ItemCategory[],
 	...Object.values(subCategories) as ItemCategory[]
 ];
-
-export {
-	Category,
-	primaryCategories,
-	subCategories,
-	allItemCategories
-};

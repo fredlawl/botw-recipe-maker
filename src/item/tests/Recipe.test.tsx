@@ -1,11 +1,11 @@
 import React from 'react';
 import {ImmunityBuffType} from "../ImmunityBuff";
-import Material from "../Material";
-import Recipe, {Logic, RecipeIngredient} from "../Recipe";
-import ItemStack from "../ItemStack";
-import {Category, primaryCategories} from "../data/itemCategories";
-import ItemCategory from "../ItemCategory";
-import {materialLookupTable, MaterialType} from "../data/materials";
+import {Material} from "../Material";
+import {Recipe} from "../Recipe";
+import {ItemStack} from "../ItemStack";
+import {Category, primaryCategories} from "../database/itemCategories";
+import {ItemCategory} from "../ItemCategory";
+import {materialTypeLookupTable, MaterialType} from "../database/materials";
 
 describe("RecipeIngredient.matches()", function () {
 	const fruitCategory = new ItemCategory("Fruit");
@@ -212,11 +212,11 @@ describe("Recipe.makeup()", () => {
 
 	test("Fruitcake should work", () => {
 		// Brittle test, but needed for figuring out algorithm
-		const apple = materialLookupTable[MaterialType.APPLE];
-		const caneSugar = materialLookupTable[MaterialType.CANE_SUGAR];
-		const bananna = materialLookupTable[MaterialType.MIGHTY_BANANAS];
-		const wheat = materialLookupTable[MaterialType.TABANTHA_WHEAT];
-		const wildberry = materialLookupTable[MaterialType.WILDBERRY];
+		const apple = materialTypeLookupTable[MaterialType.APPLE];
+		const caneSugar = materialTypeLookupTable[MaterialType.CANE_SUGAR];
+		const bananna = materialTypeLookupTable[MaterialType.MIGHTY_BANANAS];
+		const wheat = materialTypeLookupTable[MaterialType.TABANTHA_WHEAT];
+		const wildberry = materialTypeLookupTable[MaterialType.WILDBERRY];
 
 		const fruitcake = new Recipe("Fruitcake", [
 			Logic.AND,

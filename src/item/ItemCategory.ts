@@ -1,6 +1,6 @@
 import {EntityType, TypedEntity} from "../Entity";
 
-class ItemCategory extends TypedEntity<ItemCategory> {
+export class ItemCategory extends TypedEntity<ItemCategory> {
 	public readonly name: string;
 	public readonly children: ItemCategory[];
 	public readonly type: EntityType = EntityType.Category;
@@ -37,5 +37,3 @@ class ItemCategory extends TypedEntity<ItemCategory> {
 		return categories;
 	}
 }
-
-export default ItemCategory;

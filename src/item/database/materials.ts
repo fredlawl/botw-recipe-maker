@@ -1,8 +1,8 @@
 import {ImmunityBuffType} from "../ImmunityBuff";
-import Material from "../Material";
+import {Material} from "../Material";
 import {Category, primaryCategories, subCategories} from "./itemCategories";
 
-enum MaterialType {
+export enum MaterialType {
 	ACORN,
 	APPLE,
 	ARMORANTH,
@@ -94,7 +94,7 @@ enum MaterialType {
 	ZAPSHROOM,
 }
 
-const materialLookupTable: any = {
+export const materialTypeLookupTable: any = {
 	[MaterialType.ACORN]: new Material("Acorn", [ primaryCategories[Category.MISC] ], [], ImmunityBuffType.NONE),
 	[MaterialType.APPLE]: new Material("Apple", [ primaryCategories[Category.FRUIT] ], [], ImmunityBuffType.NONE),
 	[MaterialType.ARMORANTH]: new Material("Armoranth", [ primaryCategories[Category.PLANTS] ], [], ImmunityBuffType.NONE),
@@ -258,12 +258,35 @@ const materialLookupTable: any = {
 	[MaterialType.ZAPSHROOM]: new Material("Zapshroom", [ primaryCategories[Category.SHROOMS] ], [], ImmunityBuffType.NONE),
 };
 
-const allIngredients: Material[] = [
-	...Object.values<Material>(materialLookupTable)
-]
+export const allMaterials: Material[] = [
+	...Object.values<Material>(materialTypeLookupTable)
+];
 
-export {
-	MaterialType,
-	materialLookupTable,
-	allIngredients
-};
+export const materialIdToMaterialLookupTable = (() => {
+	const returnObj: any = {};
+	for (let i = 0; i < allMaterials.length; i++) {
+		returnObj[allMaterials[i].id] = i;
+	}
+
+	return returnObj;
+})();
+
+export const categoryToMaterialsLookupTable = (() => {
+	const returnObj: any = {};
+	for (let i = 0; i < allMaterials.length; i++) {
+		const categoryLineage = allMaterials[i].categoryIdentifiers;
+		for (const categoryId of categoryLineage) {
+			if (!returnObj[categoryId]) {
+				returnObj[categoryId] = new Set();
+			}
+
+			returnObj[categoryId].add(i);
+		}
+	}
+
+	return returnObj;
+})();
+
+export function getMaterialById(id: string): Material {
+	return allMaterials[materialIdToMaterialLookupTable[id]];
+}

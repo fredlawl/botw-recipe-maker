@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "../sass/ClickableItem.scss";
 import "../sass/ItemIcon.scss";
-import ItemStack from "../ItemStack";
+import {ItemStack} from "../ItemStack";
 import {getItemIconClass} from "../utility";
 import {Item} from "../Item";
 

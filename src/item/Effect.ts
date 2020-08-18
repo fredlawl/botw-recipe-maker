@@ -1,4 +1,4 @@
-class EffectType {
+export class EffectType {
 	public static readonly NONE = new EffectType(0);
 	public static readonly HEALTH = new EffectType(1);
 	public static readonly ATTACK = new EffectType(2);
@@ -38,7 +38,7 @@ class EffectType {
 	}
 }
 
-class Effect {
+export class Effect {
 	public readonly effect: EffectType;
 	public readonly value: number;
 
@@ -52,7 +52,7 @@ class Effect {
 	}
 }
 
-const effectTypeLookupTable: any = {
+export const effectTypeLookupTable: any = {
 	[EffectType.NONE.toString()]: EffectType.NONE,
 	[EffectType.HEALTH.toString()]: EffectType.HEALTH,
 	[EffectType.STAMINA.toString()]: EffectType.STAMINA,
@@ -60,10 +60,4 @@ const effectTypeLookupTable: any = {
 	[EffectType.SPEED.toString()]: EffectType.SPEED,
 	[EffectType.DEFENSE.toString()]: EffectType.DEFENSE,
 	[EffectType.STEALTH.toString()]: EffectType.STEALTH,
-};
-
-export {
-	Effect as default,
-	EffectType,
-	effectTypeLookupTable
 };
