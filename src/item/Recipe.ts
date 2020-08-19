@@ -17,7 +17,7 @@ export class Recipe extends Entity<Recipe> {
 		super(name);
 		this.name = name;
 		this.ingredients = ingredients;
-		this._id = [this._id, ...this.ingredients.map(i => `${i.item.id}_${i.stack}`)].join('_');
+		this._id = [this._id, ...this.ingredients.sort().map(i => `${i.item.id}_${i.stack}`)].join('_');
 	}
 
 	get stack(): number {

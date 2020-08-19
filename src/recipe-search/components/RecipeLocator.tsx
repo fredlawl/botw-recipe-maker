@@ -9,10 +9,8 @@ interface RecipeLocatorProps {
 }
 
 const RecipeLocator = (props: RecipeLocatorProps) => {
-	// let matchedRecipes = allRecipes.map(r => r.makeup(props.inventory.items));
-	// matchedRecipes = matchedRecipes.filter(r => r !== null);
 	const matchedRecipes: Recipe[] = (new RecipeMatcher(props.inventory)).getRecipes();
-	console.log(matchedRecipes);
+
 	return (
 		<div className={"recipe-locator"}>
 			<div className={"container"}>

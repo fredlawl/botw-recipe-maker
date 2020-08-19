@@ -16,42 +16,24 @@ import {Category, primaryCategories} from "./itemCategories";
  * @param recipeLogic
  */
 const createForests = (recipeLogic: any[]): any[] => {
+	const ingredients: RecipeIngredient[] = recipeLogic.slice(1, recipeLogic.length);
+	let forest: any[] = [];
 
-	const forests = (recipeLogic: any[]) => {
-		const ingredients: RecipeIngredient[] = recipeLogic.slice(1, recipeLogic.length);
-		let forest: any[] = [];
-
-		for (let i = 0, len = ingredients.length; i < len; i++) {
-			if (Array.isArray(ingredients[i])) {
-				forest = [...forest, ...createForests(ingredients[i] as any)];
-				recipeLogic.splice(i + 1, 1);
-				ingredients.splice(i, 1);
-				i--;
-				len--;
-			}
+	for (let i = 0, len = ingredients.length; i < len; i++) {
+		if (Array.isArray(ingredients[i])) {
+			forest = [...forest, ...createForests(ingredients[i] as any)];
+			recipeLogic.splice(i + 1, 1);
+			ingredients.splice(i, 1);
+			i--;
+			len--;
 		}
+	}
 
-		if (recipeLogic.length > 1) {
-			forest.push(recipeLogic);
-		}
+	if (recipeLogic.length > 1) {
+		forest.push(recipeLogic);
+	}
 
-		return forest;
-	};
-
-	// Sort by Logic, if both are OR, then shortest OR length first
-	return forests(recipeLogic).sort((a: any[], b: any[]) => {
-		const [aLogicOp, ...aIngredients] = a;
-		const [bLogicOp, ...bIngredients] = b;
-		if (aLogicOp === Logic.AND && aLogicOp === bLogicOp) {
-			return 0;
-		}
-
-		if (aLogicOp === Logic.OR && aLogicOp === bLogicOp) {
-			return aIngredients.length > bIngredients.length ? 1 :  -1;
-		}
-
-		return (aLogicOp === Logic.AND && aLogicOp !== bLogicOp) ? 1 : -1;
-	});
+	return forest;
 };
 
 /**
@@ -216,7 +198,16 @@ export const recipes: Recipe[] = [
 		const forests = createForests(recipeConfig.logic);
 		let requiredIngredients: ItemStack<Material>[] = [];
 		let combinationals: any[] = [];
-		const recipes: Recipe[] = [];
+
+		/*
+			This is a little extra, but this _could_ happen, so we have
+			the ID generation for a recipe sort the ingredients alphabetically
+			and with numbers to ensure uniqueness on the ID.
+
+			Slows down slightly, but has storage potential & fixes
+			reacts unique ID problem for lists.
+		 */
+		const uniqueRecipes: Map<string, Recipe> = new Map<string, Recipe>();
 
 		for (const tree of forests) {
 			const [logicOp, ...ingredients] = tree;
@@ -234,7 +225,12 @@ export const recipes: Recipe[] = [
 		const combinationalCopies = combinationals.map(c => [...c]);
 
 		for (let i = 0; i < numberOfIterations; i++) {
-			const materials: ItemStack<Material>[] = [];
+			const materials: Map<string, ItemStack<Material>> = new Map<string, ItemStack<Material>>(
+				requiredIngredients.map(ri => {
+					return [ri.item.id, ri];
+				})
+			);
+
 			for (let [i, ingredients] of combinationals.entries()) {
 				let ingredient = ingredients.pop();
 
@@ -243,17 +239,25 @@ export const recipes: Recipe[] = [
 					ingredient = ingredients.pop();
 				}
 
-				materials.push(new ItemStack<Material>(ingredient.entity as Material, ingredient.amount));
+				/*
+					We count the ingredients that are the same for this
+					variation of the recipe to apply.
+				 */
+				const itemStack = new ItemStack<Material>(ingredient.entity as Material, ingredient.amount);
+				const foundItemStack = materials.get(itemStack.item.id);
+				if (foundItemStack) {
+					materials.set(itemStack.item.id, foundItemStack.increment(1));
+					continue;
+				}
+
+				materials.set(itemStack.item.id, itemStack);
 			}
 
-			recipes.push(new Recipe(recipeConfig.name, [...requiredIngredients, ...materials]));
+			const recipe = new Recipe(recipeConfig.name, Array.from(materials.values()));
+			uniqueRecipes.set(recipe.id, recipe);
 		}
 
-		// Now that we have all the recipes, we perform a final combine on ingredients that may have doubled up
-		// TODO: This helps the counting check on the matching process
-
-		// Finally write out the recipes
-		for (const recipe of recipes) {
+		for (const recipe of uniqueRecipes.values()) {
 			writeStream.write(writeRecipe(recipe));
 		}
 	}
