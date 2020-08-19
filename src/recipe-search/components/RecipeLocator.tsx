@@ -3,13 +3,14 @@ import "../sass/RecipeLocator.scss";
 import {Inventory} from "../../inventory/Inventory";
 import {RecipeMatcher} from "../RecipeMatcher";
 import {Recipe} from "../../item/Recipe";
+import {recipes} from "../../item/database/recipes";
 
 interface RecipeLocatorProps {
 	inventory: Inventory
 }
 
 const RecipeLocator = (props: RecipeLocatorProps) => {
-	const matchedRecipes: Recipe[] = (new RecipeMatcher(props.inventory)).getRecipes();
+	const matchedRecipes: Recipe[] = (new RecipeMatcher(props.inventory)).getRecipes(recipes);
 
 	return (
 		<div className={"recipe-locator"}>

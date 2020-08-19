@@ -12,6 +12,13 @@ export class Inventory {
 		return newInventory;
 	}
 
+	public static bulkCreate(items: ItemStack<Material>[]): Inventory {
+		const inventory = new Inventory();
+		inventory._items = new Map<string, ItemStack<Material>>(items.map(i => [i.item.id, i]));
+		inventory._totalCount = inventory._items.size;
+		return inventory;
+	}
+
 	public constructor() {
 		this._totalCount = 0;
 		this._items = new Map<string, ItemStack<Material>>();

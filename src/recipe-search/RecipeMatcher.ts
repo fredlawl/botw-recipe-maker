@@ -1,5 +1,4 @@
 import {Inventory} from "../inventory/Inventory";
-import {recipes} from "../item/database/recipes";
 import {Recipe} from "../item/Recipe";
 
 // @ts-ignore
@@ -19,7 +18,7 @@ export class RecipeMatcher {
 		this._inventory = inventory;
 	}
 
-	public getRecipes(): Recipe[] {
+	public getRecipes(recipes: Recipe[]): Recipe[] {
 		const firstPassRecipes: Recipe[] = [];
 		const secondPassRecipes: Recipe[] = [];
 
