@@ -56,7 +56,7 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 						<div className={"field"}>
 							<label>
 								<input type={"checkbox"} name={"boost[attack]"}/>
-								Defense
+								Attack
 							</label>
 						</div>
 						<div className={"field"}>
@@ -99,7 +99,15 @@ const RecipeLocator = (props: RecipeLocatorProps) => {
 							</label>
 						</div>
 					</div>
-
+					<div className={"fieldgroup"}>
+						<span className={"fieldgroup-header"}>Exclusions:</span>
+						<div className={"field"}>
+							<label>
+								<input type={"checkbox"} name={"excludes[baked]"}/>
+								Baked Goods
+							</label>
+						</div>
+					</div>
 				</aside>
 				<section className={"results"}>
 					<h1>Craftable Recipes</h1>
